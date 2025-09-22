@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Add In Mage::
+ *
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the EULA that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL: http://add-in-mage.com/support/presales/eula/
+ *
+ *
+ * PROPRIETARY DATA
+ * 
+ * This file contains trade secret data which is the property of Add In Mage:: Ltd. 
+ * This file is submitted to recipient in confidence.
+ * Information and source code contained herein may not be used, copied, sold, distributed, 
+ * sub-licensed, rented, leased or disclosed in whole or in part to anyone except as permitted by written
+ * agreement signed by an officer of Add In Mage:: Ltd.
+ * 
+ * 
+ * MAGENTO EDITION NOTICE
+ * 
+ * This software is designed for Magento Community edition.
+ * Add In Mage:: Ltd. does not guarantee correct work of this extension on any other Magento edition.
+ * Add In Mage:: Ltd. does not provide extension support in case of using a different Magento edition.
+ * 
+ * 
+ * @category    AddInMage
+ * @package     AddInMage_DexConditions
+ * @copyright   Copyright (c) 2013 Add In Mage:: Ltd. (http://www.add-in-mage.com)
+ * @license     http://add-in-mage.com/support/presales/eula/  End User License Agreement (EULA)
+ * @author      Add In Mage:: Team <team@add-in-mage.com>
+ */
+-->
+<config>
+  <modules>
+    <AddInMage_DexConditions>
+      <version>1.1.4</version>
+    </AddInMage_DexConditions>
+  </modules>
+  <default>
+  	<addinmage_dexconditions>
+  	 <general>
+  	  <use>1</use>
+  	 </general>
+  	</addinmage_dexconditions>
+  </default>
+  <global>
+    <blocks>
+      <dexconditions>
+        <class>AddInMage_DexConditions_Block</class>
+      </dexconditions>
+    </blocks>
+    <models>
+      <dexconditions>
+        <class>AddInMage_DexConditions_Model</class>
+        <resourceModel>dexconditions_mysql4</resourceModel>
+      </dexconditions>
+       
+      <salesrule>
+        <rewrite>
+          <rule>AddInMage_DexConditions_Model_SalesRule_Rule</rule>
+          <validator>AddInMage_DexConditions_Model_SalesRule_Validator</validator>
+          <rule_condition_product>AddInMage_DexConditions_Model_Extra_Conditions</rule_condition_product>
+          <rule_condition_product_combine>AddInMage_DexConditions_Model_SalesRule_Rule_Condition_Product_Combine</rule_condition_product_combine>
+          <rule_condition_product_found>AddInMage_DexConditions_Model_SalesRule_Rule_Condition_Product_Found</rule_condition_product_found>
+          <rule_condition_product_subselect>AddInMage_DexConditions_Model_SalesRule_Rule_Condition_Product_Subselect</rule_condition_product_subselect>
+        </rewrite>
+      </salesrule>
+    </models>
+    
+    <helpers>
+      <dexconditions>
+        <class>AddInMage_DexConditions_Helper</class>
+      </dexconditions>
+    </helpers>
+    <resources>
+      <dexconditions_setup>
+        <setup>
+          <module>AddInMage_DexConditions</module>
+          <class>AddInMage_DexConditions_Model_Mysql4_Setup</class>
+        </setup>
+        <connection>
+          <use>core_setup</use>
+        </connection>
+      </dexconditions_setup>
+    </resources>
+  </global>
+  <frontend>
+    <translate>
+      <modules>
+        <dexconditions>
+          <files>
+            <default>AddInMage_DexConditions.csv</default>
+          </files>
+        </dexconditions>
+      </modules>
+    </translate>
+  </frontend>
+  <adminhtml>
+     <events>
+      <salesrule_rule_save_before>
+        <observers>
+          <process_extra_on_save>
+            <class>AddInMage_DexConditions_Model_Observer</class>
+            <method>ruleBeforSave</method>
+          </process_extra_on_save>
+        </observers>
+      </salesrule_rule_save_before>
+      <salesrule_rule_load_after>
+        <observers>
+          <process_extra_on_load>
+            <class>AddInMage_DexConditions_Model_Observer</class>
+            <method>ruleAfterLoad</method>
+          </process_extra_on_load>
+        </observers>
+      </salesrule_rule_load_after>
+     </events>
+    <layout>
+      <updates>
+        <dexconditions>
+          <file>addinmage/dexconditions.xml</file>
+        </dexconditions>
+      </updates>
+    </layout>
+    <translate>
+      <modules>
+        <dexconditions>
+          <files>
+            <default>AddInMage_DexConditions.csv</default>
+          </files>
+        </dexconditions>
+      </modules>
+    </translate>
+  </adminhtml>
+  <admin>
+    <routers>
+      <dexconditions>
+        <use>admin</use>
+        <args>
+          <module>AddInMage_DexConditions</module>
+          <frontName>dexconditions</frontName>
+        </args>
+      </dexconditions>
+    </routers>
+   </admin>
+</config>

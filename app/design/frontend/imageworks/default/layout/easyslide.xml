@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>css/easyslide.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/nivo/nivo-slider.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/nivo/bar.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/nivo/dark.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/nivo/default.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/nivo/light.css</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/easyslide.js</name></action>
+        </reference>
+        <block type="core/template" name="tm.load.jquery" template="easyslide/load.phtml"/>
+    </default>
+</layout>

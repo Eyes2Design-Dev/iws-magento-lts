@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <ModernizedMedia_PurchaseWizard>
+            <version>0.0.1</version>
+        </ModernizedMedia_PurchaseWizard>
+    </modules>
+
+    <global>
+        <blocks>
+            <purchasewizard>
+                <class>ModernizedMedia_PurchaseWizard_Block</class>
+            </purchasewizard>
+        </blocks>
+        <helpers>
+            <purchasewizard>
+                <class>ModernizedMedia_PurchaseWizard_Helper</class>
+            </purchasewizard>
+        </helpers>
+    </global>
+    
+    <frontend>
+        <!-- <layout>
+            <updates>
+                <purchasewizard>
+                    <file>purchasewizard.xml</file>
+                </purchasewizard>
+            </updates>
+        </layout> -->
+
+        <routers>
+            <purchasewizard>
+                <use>standard</use>
+                <args>
+                    <module>ModernizedMedia_PurchaseWizard</module>
+                    <frontName>purchasewizard</frontName>
+                </args>
+            </purchasewizard>
+        </routers>
+    </frontend>
+
+</config>

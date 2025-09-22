@@ -1,0 +1,62 @@
+/******************************************************/
+/* CSS Stylesheet for the password reset landing page */
+/* Delete when done!                                  */
+/******************************************************/
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css');
+
+legend {
+	display:none;
+}
+.header-container .form-search input {
+	height:37px;
+}
+.header-row {
+	width:100%;
+	min-height:300px;
+	background-image:url(http://www.imageworkssupply.com/images/password/header-bg.png);
+	background-size: cover;
+}
+.announcement {
+	margin:50px;
+	background-color:rgba(0,0,0,0.7);
+	color:#fff;
+	text-align: justify;
+	padding:10px;
+}
+.announcement>h2 {
+	font-size: 16px;
+	font-weight: bold;
+	color:#8cc63f;
+	text-align: left;
+}
+.password {
+	background-color:rgba(0,0,0,0.7);
+	color:#fff;
+	position:relative;
+	height:300px;
+	width:65%;
+	padding:10px;
+	display:inline-block;	
+}
+.password>h2 {
+	font-size: 16px;
+	font-weight: bold;
+	color:#8cc63f;
+	text-align: left;
+}
+.form-list label.required {
+	color:#fff;
+}
+.form-list input.input-text, .form-list select, .form-list textarea {
+	color:#000;
+	width:100%;
+}
+button.pw-button {
+	background-color:#8cc63f;
+	padding:10px;
+	border:none;
+	font-weight: bold;
+}
+div.image>img {
+	width:65% !important;
+}

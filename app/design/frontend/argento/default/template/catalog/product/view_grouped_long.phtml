@@ -1,0 +1,302 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+    document.observe('dom:loaded', function(){
+        $$(".plusminus .plusminus-plus").invoke("observe", 'click', function(event){
+            var val = this.up(1);
+            var val1 = val.down("input.qty").value;
+            val.down("input.qty").setAttribute("value", parseInt(val1, 10)+1);
+        });
+        $$(".plusminus .plusminus-minus").invoke("observe", 'click', function(event){
+            var val = this.up(1);
+            var val1 = val.down("input.qty").value;
+            if(parseInt(val1, 10) > 1){
+                val.down("input.qty").setAttribute("value", parseInt(val1, 10)-1);
+            }
+        });
+    });
+</script>
+<style type="text/css">
+    .product-view .product-img-box-group {
+        width: 265px;
+    }
+    .product-view .product-shop, .col1-layout .product-view .product-shop {
+        margin-left: 278px;
+    }
+    .product-view .add-to-cart-wrapper {
+        width: 811px;
+        height: 503px;
+        max-height: 503px;
+        position: relative;
+    }
+    .product-view .add-to-cart-wrapper .availability {
+        top: -39px;
+        left: 278px;
+    }
+    #super-product-table {
+        height: 100%;
+    }
+    #super-product-table tbody {
+         display: block;
+  overflow: auto;
+  width: 100%;
+  height: 480px;
+    }
+    #super-product-table input.input-text.qty {
+        float:left;
+        max-width: 24px;
+    }
+
+    #super-product-table thead > tr, tbody{
+        display:block;
+    }
+    .product-view .grouped-items-table th:first-child {
+        width: 400px;
+    }
+    .product-view .grouped-items-table th:nth-child(2) {
+        width: 243px;
+    }
+    .product-view .grouped-items-table th:last-child {
+        width: 128px;
+    }
+    .product-view .grouped-items-table tr td:first-child {
+        width: 400px;
+    }
+    .product-view .grouped-items-table tr td:nth-child(2) {
+        width: 243px;
+    }
+    .grouped-items-table tr td:last-child {
+        width: 116px;
+    }
+    .tier-prices.product-pricing .tier-price {
+        border: 1px solid #e9e9e9;
+        padding: 0 0 0 5px;
+        font-size: 0.77em;
+        background-color: #fff;
+        word-spacing: -2px;
+        white-space: nowrap;
+    }
+    .price-box .regular-price .price {
+        font-weight: bold;
+        font-size: 0.8em;
+        padding-right: 6px;
+        padding-left: 2px;
+    }
+
+    .product-view .add-to-cart-wrapper td .price-box {
+        float:left;
+        width: auto;
+    }
+    .product-view .add-to-cart-wrapper td .tier-prices.product-pricing {
+        float:left;
+    }
+
+    button.button.btn-cart.rva {
+        background-color: #ff7c0e;
+        border-radius: 3px;
+        word-spacing: 0px;
+        color: #fff;
+        font-size: .9em;
+        padding:1px;
+        float:left;
+        padding: 1px 0 1px 0;
+        margin-top: 2px;
+    }
+    button.button.btn-cart.rva:after {
+        content: '›';
+        font-size: 1.2em;
+        line-height: 0px;
+        font-family: Verdana;
+    }
+    .plusminus {
+        line-height: 1;
+        float:left;
+        margin: 0 7px 0 1px;
+    }
+    .plusminus>div {
+        cursor: pointer;
+        background-color: #e5e5e5;
+        font-size: .9em;
+        border-radius: 2px;
+    }
+</style>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="product-view">
+    <div class="product-essential">
+
+
+        <div class="product-img-box product-img-box-group">
+                <?php
+                $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(265).'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" />';
+                echo $_helper->productAttribute($_product, $_img, 'image');
+                ?>
+        </div>
+
+        <div class="product-shop">
+            <div class="product-shop-inner">
+            <div itemscope itemtype="http://schema.org/Product">
+                <div class="product-name">
+                    <h1 itemprop="name"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                </div>
+
+                <?php if ($this->canEmailToFriend()): ?>
+                    <p class="email-friend"><a rel="nofollow" href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><?php echo $this->__('Email to a Friend') ?></a></p>
+                <?php endif; ?>
+
+                <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
+                <?php echo $this->getChildHtml('alert_urls') ?>
+
+                <?php if ($_product->getShortDescription()):?>
+                    <div class="short-description">
+                        <div class="std" itemprop="description"><?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?></div>
+                    </div>
+                <?php endif;?>
+
+                <?php echo $this->getTierPriceHtml() ?>
+                <?php echo $this->getChildHtml('extrahint') ?>
+
+                <div class="clearer"></div>
+
+                <?php echo $this->getChildHtml('other');?>
+
+                <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                <?php endif;?>
+                <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+                    <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+                <?php endif;?>
+
+                <?php
+                    echo $this->getLayout()
+                        ->createBlock('richsnippets/product')
+                        ->setTemplate('tm/richsnippets/richsnippets_view.phtml')
+                        ->toHtml();
+                ?>
+            </div>
+            </div>
+        </div>
+        <?php if (!$this->hasOptions() || !$_product->isSaleable()) : ?>
+        <div class="add-to-cart-wrapper">
+            <?php endif ?>
+
+            <?php echo $this->getChildHtml('product_type_data') ?>
+
+            <?php if (!$this->hasOptions() || !$_product->isSaleable()) : ?>
+        </div>
+    <?php endif ?>
+
+        <div class="clearer"></div>
+    </div>
+    <script type="text/javascript">
+        //<![CDATA[
+        var productAddToCartForm = new VarienForm('product_addtocart_form');
+        productAddToCartForm.submit = function(button, url) {
+            if (this.validator.validate()) {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                    form.action = url;
+                }
+                var e = null;
+                try {
+                    this.form.submit();
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(productAddToCartForm);
+
+        productAddToCartForm.submitLight = function(button, url){
+            if(this.validator) {
+                var nv = Validation.methods;
+                delete Validation.methods['required-entry'];
+                delete Validation.methods['validate-one-required'];
+                delete Validation.methods['validate-one-required-by-name'];
+                // Remove custom datetime validators
+                for (var methodName in Validation.methods) {
+                    if (methodName.match(/^validate-datetime-.*/i)) {
+                        delete Validation.methods[methodName];
+                    }
+                }
+
+                if (this.validator.validate()) {
+                    if (url) {
+                        this.form.action = url;
+                    }
+                    this.form.submit();
+                }
+                Object.extend(Validation.methods, nv);
+            }
+        }.bind(productAddToCartForm);
+
+        function RVAsubmit(button, id){
+            var fform = $('product_addtocart_form'+id);
+            var fformV = new VarienForm('product_addtocart_form'+id);
+            var url = fform.action;
+            var isUploadFile = false;
+            var params = fform.serialize(true);
+            if(fformV.validator && fformV.validator.validate()){
+                AjaxPro.request({
+                    'url'      : url,
+                    parameters : params
+                });
+                $("rva_super_group"+id).setAttribute("value", 1);
+            }
+
+            return false;
+        }
+        //]]>
+    </script>
+
+    <div class="product-collateral">
+<?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html):?>
+        <div class="box-collateral <?php echo "box-{$alias}"?>">
+            <?php echo $html; ?>
+        </div>
+<?php endforeach;?>
+        <?php echo $this->getChildHtml('product_additional_data') ?>
+        <?php echo $this->getChildHtml('upsell_products') ?>
+    </div>
+</div>

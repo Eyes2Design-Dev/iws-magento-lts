@@ -1,0 +1,13 @@
+<layout version="0.1.0">
+    <catalog_product_view>
+        <reference name="head">
+            <block type="core/template" name="facebook_like_tags" template="facebook/like/tags.phtml" before="-"/>
+        </reference>
+        <reference name="after_body_start">
+            <block type="core/template" name="facebook_like_js" template="facebook/like/js.phtml" before="-"/>
+        </reference>
+      <!--  <reference name="alert.urls">
+            <block type="core/template" name="facebook_like_button" template="facebook/like/button.phtml" before="-"/>
+        </reference>-->
+    </catalog_product_view>
+</layout>

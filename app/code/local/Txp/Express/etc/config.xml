@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Txp_Express>
+            <version>1.0.0</version>
+        </Txp_Express>
+    </modules>
+    <global>
+        <models>
+            <Express>
+                <class>Txp_Express_Model</class>
+            </Express>
+        </models>
+        <helpers>
+            <Express>
+                <class>Txp_Express_Helper</class>
+            </Express>
+        </helpers>
+    </global>
+    <default>
+        <payment>
+            <TxpBase>
+                <active>1</active>
+                <title>Credit Card (Transaction Express)</title>
+                <cctypes>AE,VI,MC,DI</cctypes>
+                <TXPAccountNumber backend_model="adminhtml/system_config_backend_encrypted"/>
+                <TXPAccountPassword backend_model="adminhtml/system_config_backend_encrypted"/>
+                <model>Express/Base</model>
+                <order_status>Processing</order_status>
+                <payment_action>Authorize and Capture</payment_action>
+                <allowspecific>0</allowspecific>
+            </TxpBase>
+        </payment>
+    </default>
+</config>
