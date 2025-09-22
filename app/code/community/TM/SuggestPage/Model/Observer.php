@@ -132,7 +132,7 @@ class TM_SuggestPage_Model_Observer
             if (strstr($search, '*')) {
                 $index = false;
                 $search = str_replace('*', '', $search);
-                foreach ($array as $i => $str) {
+                foreach ($array as $str) {
                     if (false !== strpos($str, $search)) {
                         $array = $this->_replaceArrayValues($array, array(
                             $str => $replace

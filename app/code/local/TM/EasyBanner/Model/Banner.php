@@ -247,7 +247,7 @@ class TM_EasyBanner_Model_Banner extends Mage_Rule_Model_Rule
                 if (is_array($v1)) {
                     if (is_array($v2)) {
                         $result = array_diff($v2, $v1);
-                        $result = empty($result) && (sizeof($v2) == sizeof($v1));
+                        $result = empty($result) && (count($v2) == count($v1));
                     } else {
                         return false;
                     }

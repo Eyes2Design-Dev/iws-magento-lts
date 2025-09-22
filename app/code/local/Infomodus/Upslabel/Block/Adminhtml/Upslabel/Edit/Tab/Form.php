@@ -14,14 +14,14 @@ class Infomodus_Upslabel_Block_Adminhtml_Upslabel_Edit_Tab_Form extends Mage_Adm
       $form = new Varien_Data_Form();
       $this->setForm($form);
       $fieldset = $form->addFieldset('upslabel_form', array('legend'=>Mage::helper('upslabel')->__('Item information')));
-     
+
       $fieldset->addField('title', 'text', array(
           'label'     => Mage::helper('upslabel')->__('Title'),
           'class'     => 'required-entry',
           'required'  => true,
           'name'      => 'title',
       ));
-		
+
       $fieldset->addField('status', 'select', array(
           'label'     => Mage::helper('upslabel')->__('Withdraw'),
           'name'      => 'status',
@@ -36,7 +36,7 @@ class Infomodus_Upslabel_Block_Adminhtml_Upslabel_Edit_Tab_Form extends Mage_Adm
               ),
           ),
       ));
-     
+
       $fieldset->addField('order_id', 'text', array(
           'name'      => 'order_id',
           'label'     => Mage::helper('upslabel')->__('Order Id'),
@@ -72,7 +72,7 @@ class Infomodus_Upslabel_Block_Adminhtml_Upslabel_Edit_Tab_Form extends Mage_Adm
           'required'  => true,
           'readonly' => true,
       ));
-     
+
       if ( Mage::getSingleton('adminhtml/session')->getUpslabelData() )
       {
           $form->setValues(Mage::getSingleton('adminhtml/session')->getUpslabelData());

@@ -21,14 +21,14 @@ class Amasty_Customerattr_Model_Mysql4_Details extends Mage_Core_Model_Mysql4_Ab
             	'dependend_attribute_id' => $data['dependend_attribute_id']
             );
     	 */
-    	
+
     	$relation_id = $data['relation_id'];
     	$attribute_ids = $data['attribute_id'];
     	$option_ids = $data['option_id'];
     	$dependent_ids = $data['dependend_attribute_id'];
-    	    	
+
     	$relationDetailsTable = $this->getTable('amcustomerattr/details');
-    	
+
     	/*
     	 * Delete data for relation first
     	 */
@@ -36,7 +36,7 @@ class Amasty_Customerattr_Model_Mysql4_Details extends Mage_Core_Model_Mysql4_Ab
 			'relation_id = ?' => $relation_id                    
 		);
     	$this->_getWriteAdapter()->delete($relationDetailsTable, $clearCondition);
-    	
+
     	/*
     	 * Insert new data 
     	 */
@@ -53,12 +53,12 @@ class Amasty_Customerattr_Model_Mysql4_Details extends Mage_Core_Model_Mysql4_Ab
     			}
     		}
     	}
-    	
+
     	if (count($insertData)) {    		
     		$this->_getWriteAdapter()->insertMultiple($relationDetailsTable, $insertData);
     	}
-    	
-    	
+
+
     	/*
     	 if (!$object->getEntityAttributeId()) {
             return $this;

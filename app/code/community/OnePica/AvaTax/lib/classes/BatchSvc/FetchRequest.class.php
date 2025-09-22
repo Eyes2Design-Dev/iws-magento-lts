@@ -12,7 +12,7 @@ class FetchRequest {
   private $PageIndex; // int
   private $PageSize; // int
   private $RecordCount; // int
-  
+
   function __construct()
   {
   	$this->MaxCount=0;

@@ -165,7 +165,7 @@ class MW_Mcore_Helper_Data extends Mage_Core_Helper_Abstract
 		
 		$key_config="";
 		$modules_company = Mage::getStoreConfig('mcore/extensions'); 
-		foreach ($modules_company as $key=>$value)
+		foreach ($modules_company as $value)
 		   	{
 			if(strtolower(trim($modulename))==strtolower(trim($value['key'])))
 		  			{
@@ -182,7 +182,7 @@ class MW_Mcore_Helper_Data extends Mage_Core_Helper_Abstract
 	{		
 		$realkey="";
 		$modules_company = Mage::getStoreConfig('mcore/extensions'); 
-		foreach ($modules_company as $key=>$value)
+		foreach ($modules_company as $value)
 		   	{
 			if(strtolower(trim($modulename))==strtolower(trim($value['key'])))
 		  			{
@@ -200,7 +200,7 @@ class MW_Mcore_Helper_Data extends Mage_Core_Helper_Abstract
 		$modulename .= $edition;
 		
 		$modules_company = Mage::getStoreConfig('mcore/extensions'); 
-		foreach ($modules_company as $key=>$value)
+		foreach ($modules_company as $value)
 		   	{
 			if(strtolower(trim($modulename))==strtolower(trim($value['key'])))
 		  			{
@@ -218,7 +218,7 @@ class MW_Mcore_Helper_Data extends Mage_Core_Helper_Abstract
 		$modulename .= $editionName;
 		$modules_company = Mage::getStoreConfig('mcore/extensions'); 
 		
-		foreach ($modules_company as $key=>$value)
+		foreach ($modules_company as $value)
 		   	{		   		
 				if(strtolower(trim($modulename))==strtolower(trim($value['key'])))
 		  			{
@@ -501,7 +501,7 @@ class MW_Mcore_Helper_Data extends Mage_Core_Helper_Abstract
 		$myextension = array();
 		$modules_company = Mage::getStoreConfig('mcore/extensions');
 		if($modules_company)	
-		foreach ($modules_company as $key=>$value)
+		foreach ($modules_company as $value)
     	{
     		$myextension[] = $value['key'];
     	}
@@ -659,7 +659,7 @@ class MW_Mcore_Helper_Data extends Mage_Core_Helper_Abstract
 			$modulesArray = (array)$modules2; 		
 			$modules_company = Mage::getStoreConfig('mcore/extensions');	 	
 	    	$modules_install = array(); 		
-	    	foreach ($modules_company as $key=>$value)
+	    	foreach ($modules_company as $value)
 	    	{
 	    		foreach($modules as $module)
 	    		{

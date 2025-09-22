@@ -86,11 +86,11 @@ class OnePica_AvaTax_Model_Avatax_Invoice extends OnePica_AvaTax_Model_Avatax_Ab
 		if($result->getResultCode() == SeverityLevel::$Success) {
 			$message = Mage::helper('avatax')->__('Invoice #%s was saved to AvaTax', $result->getDocCode());
 			$this->_addStatusHistoryComment($order, $message);
-			
+
 			if($result->getTotalTax() != $invoice->getBaseTaxAmount()) {
 				throw new OnePica_AvaTax_Model_Avatax_Exception_Unbalanced('Collected: ' . $invoice->getBaseTaxAmount() . ', Actual: ' . $result->getTotalTax());
 			}
-		
+
 		//if not successful
 		} else {
 			$messages = array();
@@ -163,11 +163,11 @@ class OnePica_AvaTax_Model_Avatax_Invoice extends OnePica_AvaTax_Model_Avatax_Ab
 		if($result->getResultCode() == SeverityLevel::$Success) {
 			$message = Mage::helper('avatax')->__('Credit memo #%s was saved to AvaTax', $result->getDocCode());
 			$this->_addStatusHistoryComment($order, $message);
-			
+
 			if($result->getTotalTax() != ($creditmemo->getTaxAmount()*-1)) {
 				throw new OnePica_AvaTax_Model_Avatax_Exception_Unbalanced('Collected: ' . $creditmemo->getTaxAmount() . ', Actual: ' . $result->getTotalTax());
 			}
-			
+
 		//if not successful
 		} else {
 			$messages = array();

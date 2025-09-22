@@ -16,7 +16,7 @@ class MW_RewardPoints_Model_Admin_Review_Product
 					->addFieldToFilter('type_of_transaction',MW_RewardPoints_Model_Type::SUBMIT_PRODUCT_REVIEW)
 					->addFieldToFilter('transaction_detail',$review->getId()."|".$review->getEntityPkValue())
 					;
-					if(!sizeof($transactions))
+					if(!count($transactions))
 					{
 						
 						Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($review->getData('customer_id'), 0);	

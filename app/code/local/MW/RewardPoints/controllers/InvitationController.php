@@ -119,7 +119,7 @@ class MW_RewardPoints_InvitationController extends Mage_Core_Controller_Front_Ac
 				$this->_initLayoutMessages('customer/session');
 				$this->renderLayout();
 			}
-    	if(sizeof($ers))
+    	if(count($ers))
     	{
 	    	$err = implode("<br>",$ers);
 	    	$this->_getSession()->addError($this->__("%s<br>",$err));
@@ -169,14 +169,14 @@ class MW_RewardPoints_InvitationController extends Mage_Core_Controller_Front_Ac
 			   $error[] = $email;
 			}
     	}
-    	if(sizeof($error))
+    	if(count($error))
     	{
 	    	$err = implode("<br>",$error);
 	    	$this->_getSession()->addError($this->__("These emails are invalid, the invitation message will not be sent to:<br>%s",$err));
     	}
 		$msg = $this->__("Your email was sent success");
-		if(sizeof($emails) >1) $msg = $this->__("Your Emails were sent successfully");
-		if(sizeof($emails) > sizeof($error)) $this->_getSession()->addSuccess($this->__($msg));
+		if(count($emails) >1) $msg = $this->__("Your Emails were sent successfully");
+		if(count($emails) > count($error)) $this->_getSession()->addSuccess($this->__($msg));
     	$this->_redirect('rewardpoints/invitation/index');
     }
 	public function inviteajaxAction()
@@ -238,7 +238,7 @@ class MW_RewardPoints_InvitationController extends Mage_Core_Controller_Front_Ac
 			   $error[] = $email;
 			}
     	}
-    	if(sizeof($error))
+    	if(count($error))
     	{
     		$err = implode("<br>",$error);
 	    	$mw_error = $this->__("These emails are invalid, the invitation message will not be sent to:<br>%s",$err);
@@ -252,8 +252,8 @@ class MW_RewardPoints_InvitationController extends Mage_Core_Controller_Front_Ac
 			die();
     	}
     	$msg = 1;
-		if(sizeof($emails) >1) $msg = 2; //$msg = "Your Emails were sent successfully";
-    	if(sizeof($emails) > sizeof($error)){
+		if(count($emails) >1) $msg = 2; //$msg = "Your Emails were sent successfully";
+    	if(count($emails) > count($error)){
     		header('content-type: text/javascript');
     	
 			$jsondata=array("message"=>1, 
@@ -303,7 +303,7 @@ class MW_RewardPoints_InvitationController extends Mage_Core_Controller_Front_Ac
 									   ->addFieldToFilter('transaction_detail',$rule_id)
 									   ->addFieldToFilter('status',MW_RewardPoints_Model_Status::COMPLETE);
 									   
-					if(!sizeof($transactions))
+					if(!count($transactions))
 					{
 						Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer_id, 0);	
 						$_customer = Mage::getModel('rewardpoints/customer')->load($customer_id);

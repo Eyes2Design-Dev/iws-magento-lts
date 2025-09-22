@@ -14,7 +14,7 @@ class BatchFile {
   private $Name; // string
   private $Size; // int
   private $ErrorCount; // int
-  
+
   function __construct()
   {
   	$this->BatchFileId=0;

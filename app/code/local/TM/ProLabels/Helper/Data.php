@@ -255,10 +255,10 @@ class TM_ProLabels_Helper_Data extends Mage_Core_Helper_Abstract
                     
                 }
 
-                $data[$var] = $data[$var] / $label[$mode . '_round'];
+                $data[$var] /= $label[$mode . '_round'];
                 $roundMethod = $label[$mode . '_round_method'];
                 $data[$var] = $roundMethod($data[$var]);
-                $data[$var] = $data[$var] * $label[$mode . '_round'];
+                $data[$var] *= $label[$mode . '_round'];
                 $data[$var] = Mage::helper('core')->currency($data[$var], true);
                 $tmp = str_replace('<span class="price">', '', $data[$var]);
                 $newTmp = str_replace('</span>', '', $tmp);
@@ -304,7 +304,7 @@ class TM_ProLabels_Helper_Data extends Mage_Core_Helper_Abstract
                 $roundMethod = $label[$mode . '_round_method'];
 
                 $data[$var] = $roundMethod($data[$var]);
-                $data[$var] = $data[$var] * $label[$mode . '_round'];
+                $data[$var] *= $label[$mode . '_round'];
                 if ($object->getData('type_id') === 'grouped') {
                     $data[$var] = Mage::helper('prolabels')->__('up to ') . $data[$var];
                 }
@@ -323,10 +323,10 @@ class TM_ProLabels_Helper_Data extends Mage_Core_Helper_Abstract
             if ($var == '#special_price#') {
                 $price = Mage::helper('tax')->getPrice($object, $object->getFinalPrice(), true);
                 $data[$var] = $price;
-                $data[$var] = $data[$var] / $label[$mode . '_round'];
+                $data[$var] /= $label[$mode . '_round'];
                 $roundMethod = $label[$mode . '_round_method'];
                 $data[$var] = $roundMethod($data[$var]);
-                $data[$var] = $data[$var] * $label[$mode . '_round'];
+                $data[$var] *= $label[$mode . '_round'];
                 $data[$var] = Mage::helper('core')->currency($data[$var], true);
                 continue;
             }
@@ -334,10 +334,10 @@ class TM_ProLabels_Helper_Data extends Mage_Core_Helper_Abstract
             if ($var == '#price#') {
                 $price = Mage::helper('tax')->getPrice($object, $object->getPrice(), true);
                 $data[$var] = $price;
-                $data[$var] = $data[$var] / $label[$mode . '_round'];
+                $data[$var] /= $label[$mode . '_round'];
                 $roundMethod = $label[$mode . '_round_method'];
                 $data[$var] = $roundMethod($data[$var]);
-                $data[$var] = $data[$var] * $label[$mode . '_round'];
+                $data[$var] *= $label[$mode . '_round'];
                 $data[$var] = Mage::helper('core')->currency($data[$var], true);
                 continue;
             }
@@ -345,10 +345,10 @@ class TM_ProLabels_Helper_Data extends Mage_Core_Helper_Abstract
             if ($var == '#final_price#') {
                 $price = Mage::helper('tax')->getPrice($object, $object->getFinalPrice(), true);
                 $data[$var] = $price;
-                $data[$var] = $data[$var] / $label[$mode . '_round'];
+                $data[$var] /= $label[$mode . '_round'];
                 $roundMethod = $label[$mode . '_round_method'];
                 $data[$var] = $roundMethod($data[$var]);
-                $data[$var] = $data[$var] * $label[$mode . '_round'];
+                $data[$var] *= $label[$mode . '_round'];
                 $data[$var] = Mage::helper('core')->currency($data[$var], true);
                 continue;
             }
@@ -695,7 +695,7 @@ class TM_ProLabels_Helper_Data extends Mage_Core_Helper_Abstract
             foreach (current($simpleProductIds) as $productId) {
                 $simpleProduct = Mage::getModel('catalog/product')->load($productId);
                 $productQty = $simpleProduct->getData('stock_item')->qty;
-                $quantity = $quantity + (int)$productQty;
+                $quantity += (int)$productQty;
             }
         } elseif ($product->getTypeInstance() instanceof Mage_Bundle_Model_Product_Type) {
             if ($mode = 'category') {

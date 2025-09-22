@@ -14,7 +14,7 @@ class Infomodus_Upslabel_Block_Adminhtml_Upslabel_Label_Tab_Form extends Mage_Ad
       $form = new Varien_Data_Form();
       $this->setForm($form);
       $fieldset = $form->addFieldset('upslabel_form', array('legend'=>Mage::helper('upslabel')->__('Label information')));
-     
+
       $fieldset->addField('title', 'text', array(
           'label'     => Mage::helper('upslabel')->__('Title'),
           'class'     => 'required-entry',

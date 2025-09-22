@@ -191,7 +191,7 @@ protected function checkCondition($condition, $nonCalcAction)
 		    foreach ($cart->getAllItems() as $item) {
 		        $cartItems[] = $item->getProductId();
 		    }
-		    
+
 // 		    Zend_Debug::dump($cartItems, 'in cart ======');
 		    
 		}

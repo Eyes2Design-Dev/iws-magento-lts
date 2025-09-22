@@ -12,7 +12,7 @@ class MW_RewardPoints_Model_Admin_Customer extends Mage_Core_Model_Abstract
 		$customer_id = $customer ->getId();
 		$collection_customer = Mage::getModel('rewardpoints/customer')->getCollection()
 										->addFieldToFilter('customer_id', $customer_id);
-		if(sizeof($collection_customer) == 0){
+		if(count($collection_customer) == 0){
 			$_customer_table = Mage::getModel('rewardpoints/customer')->getCollection();
 			$write = Mage::getSingleton('core/resource')->getConnection('core_write');
 	        $sql = 'INSERT INTO '.$_customer_table->getTable('customer').'(customer_id,mw_reward_point,mw_friend_id) VALUES('.$customer_id.',0,'. (($friend_id)?$friend_id:0).')';

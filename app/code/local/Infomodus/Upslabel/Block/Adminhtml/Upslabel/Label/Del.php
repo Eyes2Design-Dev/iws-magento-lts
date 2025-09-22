@@ -24,7 +24,7 @@ class Infomodus_Upslabel_Block_Adminhtml_Upslabel_Label_Del extends Mage_Adminht
         $colls = $collection->getCollection()->addFieldToFilter('shipment_id', $shipment_id)->addFieldToFilter('type', $type);
         if (count($colls) > 0) {
             $coll = array();
-            foreach ($colls AS $k => $v) {
+            foreach ($colls AS $v) {
                 $coll = $v;
 
                 $lbl = new Infomodus_Upslabel_Model_Ups();

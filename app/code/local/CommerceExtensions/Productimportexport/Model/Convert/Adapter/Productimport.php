@@ -229,7 +229,7 @@ extends Mage_Catalog_Model_Convert_Adapter_Product
 				$commadelimiteddata = explode('|',$importData['downloadable_options']);
 				foreach ($commadelimiteddata as $data) {
 					$configBundleOptionsCodes = $this->userCSVDataAsArray($data);
-					
+
 					$downloadableitems['link'][$downloadableitemsoptionscount]['is_delete'] = 0;
 					$downloadableitems['link'][$downloadableitemsoptionscount]['link_id'] = 0;
 					$downloadableitems['link'][$downloadableitemsoptionscount]['title'] = $configBundleOptionsCodes[0];
@@ -249,10 +249,10 @@ extends Mage_Catalog_Model_Convert_Adapter_Product
 						  //Create and send the JSON structure instead of the file  name
 					  $tempSampleFile = '[{"file": "'.$configBundleOptionsCodes[6].'", "status": "new"}]';
 					  $downloadableitems['link'][$downloadableitemsoptionscount]['sample'] = array('file' => ''.$tempSampleFile.'', 'type' => 'file', 'url'  => '');
-  
+
 					  //$downloadableitems['link'][$downloadableitemsoptionscount]['sample'] = array('file' => ''.$configBundleOptionsCodes[6].'', 'type' => 'file', 'url'  => '');
 						} else {
-						
+
 						if(isset($configBundleOptionsCodes[7])) {
 							$sampleproductitle = $configBundleOptionsCodes[7];
 						} else {
@@ -273,7 +273,7 @@ extends Mage_Catalog_Model_Convert_Adapter_Product
 						#$filearrayforimport = '[{"file": "/home/discou33/public_html/media/import/mypdf.pdf", "name": "mypdf.pdf", "status": "new"}]';
 						#$filearrayforimport = '[{"file": "mypdf.pdf", "name": "quickstart.pdf", "size": 324075, "status": "new"}]';
 						$filearrayforimport[] = array('file'  => ''.$configBundleOptionsCodes[4].'' , 'name'  => ''.$configBundleOptionsCodes[0].'' , 'price'  => ''.$configBundleOptionsCodes[1].'');
-						
+
 						if(isset($configBundleOptionsCodes[8])) {
 							if($configBundleOptionsCodes[8] == 0) {
 											$linkspurchasedstatus = 0;
@@ -285,14 +285,14 @@ extends Mage_Catalog_Model_Convert_Adapter_Product
 							$product->setLinksPurchasedSeparately($linkspurchasedstatus);
 							$product->setLinksPurchasedSeparately($linkspurchasedstatustext);
 						}
-						
-						
+
+
 						#$product->setLinksPurchasedSeparately(0);
 						#$product->setLinksPurchasedSeparately(false);
-					
+
 						#$files = Zend_Json::decode($filearrayforimport);
 						#$files = "mypdf.pdf";
-						
+
 						#$downloadableitems['link'][$downloadableitemsoptionscount]['file'] = $filearrayforimport;
 					} else if($configBundleOptionsCodes[3] == "url") {
 						$downloadableitems['link'][$downloadableitemsoptionscount]['link_url'] = $configBundleOptionsCodes[4];
@@ -370,7 +370,7 @@ extends Mage_Catalog_Model_Convert_Adapter_Product
 						#$filearrayforimport = '[{"file": "mypdf.pdf", "name": "quickstart.pdf", "size": 324075, "status": "new"}]';
 						#echo "FILE: " . $configBundleOptionsCodes[4];
 						$filearrayforimport[] = array('file'  => ''.$configBundleOptionsCodes[4].'' , 'name'  => ''.$configBundleOptionsCodes[0].'' , 'price'  => ''.$configBundleOptionsCodes[1].'');
-						
+
 						if(isset($configBundleOptionsCodes[8])) {
 							if($configBundleOptionsCodes[8] == 0) {
 											$linkspurchasedstatus = 0;
@@ -382,14 +382,14 @@ extends Mage_Catalog_Model_Convert_Adapter_Product
 							$product->setLinksPurchasedSeparately($linkspurchasedstatus);
 							$product->setLinksPurchasedSeparately($linkspurchasedstatustext);
 						}
-						
-						
+
+
 						#$product->setLinksPurchasedSeparately(0);
 						#$product->setLinksPurchasedSeparately(false);
-					
+
 						#$files = Zend_Json::decode($filearrayforimport);
 						#$files = "mypdf.pdf";
-						
+
 						#$downloadableitems['link'][$downloadableitemsoptionscount]['file'] = $filearrayforimport;
 					} else if($configBundleOptionsCodes[3] == "url") {
 						$downloadableitems['link'][$downloadableitemsoptionscount]['link_url'] = $configBundleOptionsCodes[4];
@@ -860,7 +860,7 @@ if(strpos($field,':')!==FALSE && strlen($value)) {
 			$mediaGalleryBackendModel = $this->getAttribute('media_gallery')->getBackend();
 
 			$arrayToMassAdd = array();
-	
+
 			foreach ($product->getMediaAttributes() as $mediaAttributeCode => $mediaAttribute) {
 				if (isset($importData[$mediaAttributeCode])) {
 					$file = $importData[$mediaAttributeCode];
@@ -871,7 +871,7 @@ if(strpos($field,':')!==FALSE && strlen($value)) {
 					}
 				}
 			}
-			
+
 			if($this->getBatchParams('exclude_images') == "true") {
 				#$product -> addImageToMediaGallery( Mage :: getBaseDir( 'media' ) . DS . 'import/' . $file, $fields, false );
 				$addedFilesCorrespondence = $mediaGalleryBackendModel->addImagesWithDifferentMediaAttributes($product, $arrayToMassAdd, Mage::getBaseDir('media') . DS . 'import', false);
@@ -879,7 +879,7 @@ if(strpos($field,':')!==FALSE && strlen($value)) {
 				#$product -> addImageToMediaGallery( Mage :: getBaseDir( 'media' ) . DS . 'import/' . $file, $fields, false, false );
 				$addedFilesCorrespondence = $mediaGalleryBackendModel->addImagesWithDifferentMediaAttributes($product, $arrayToMassAdd, Mage::getBaseDir('media') . DS . 'import', false, false);
 			}
-	
+
 			foreach ($product->getMediaAttributes() as $mediaAttributeCode => $mediaAttribute) {
 				$addedFile = '';
 				if (isset($importData[$mediaAttributeCode . '_label'])) {
@@ -891,7 +891,7 @@ if(strpos($field,':')!==FALSE && strlen($value)) {
 							$addedFile = $addedFilesCorrespondence['alreadyAddedFilesNames'][$keyInAddedFile];
 						}
 					}
-	
+
 					if (!$addedFile) {
 						$addedFile = $product->getData($mediaAttributeCode);
 					}
@@ -900,9 +900,9 @@ if(strpos($field,':')!==FALSE && strlen($value)) {
 					}
 				}
 			}		
-									
+
 		} //end check on empty values
-			
+
 			if ( !empty( $importData['gallery'] ) ) {
 				$galleryData = explode( ',', $importData["gallery"] );
 				foreach( $galleryData as $gallery_img ) {
@@ -922,8 +922,8 @@ if(strpos($field,':')!==FALSE && strlen($value)) {
 					} 
 				} 
 			} 
-		
-		
+
+
 		  #} // this ends check if enabled
 		} // this else is for check for if we can reimport products
 		$product -> setIsMassupdate( true );
@@ -939,16 +939,16 @@ if(strpos($field,':')!==FALSE && strlen($value)) {
         $this->_addAffectedEntityIds($product->getId());
 		
 		if ( isset( $importData['product_tags'] ) && $importData['product_tags'] !="" ) {
-		
+
 			#$configProductTags = $this->userCSVDataAsArray($importData['product_tags']);
 			$configProductTags = explode(',', $importData['product_tags']);
-			
+
 			#foreach ($commadelimiteddata as $dataseperated) {
 			if(!empty($configProductTags)) {
 				foreach ($configProductTags as $tagName) {
 					try {
 					$commadelimiteddata = explode(':',$tagName);
-					
+
 					$tagName = $commadelimiteddata[1];
 					$tagModel = Mage::getModel('tag/tag');
 					$result = $tagModel->loadByName($tagName);
@@ -958,7 +958,7 @@ if(strpos($field,':')!==FALSE && strlen($value)) {
 										->setStoreId($importData['store'])
 										->setStatus($tagModel->getApprovedStatus())
 										->save();
-										
+
 					$tagRelationModel = Mage::getModel('tag/tag_relation');
 					/*$tagRelationModel->loadByTagCustomer($product -> getIdBySku( $importData['sku'] ), $tagModel->getId(), '13194', Mage::app()->getStore()->getId());*/
 					if(isset($importData['customerID'])) {
@@ -1397,7 +1397,7 @@ if ($finalgroup_price_price != "") {
 /* ADDED FIX FOR IMAGE LABELS */
 
 	if(isset($imagelabeldataforimport)) {
-	
+
 			#echo "PROD ID: " . $product->getId() . "<br/>";
 			#echo "LABELS: " . $imagelabeldataforimport . "<br/>";
 			$resource = Mage::getSingleton('core/resource');
@@ -1595,7 +1595,7 @@ if ($finalgroup_price_price != "") {
             foreach ($collection as $cat) {
                 $pathArr = explode('/', $cat->getPath());
                 $namePath = '';
-                for ($i=2, $l=sizeof($pathArr); $i<$l; $i++) {
+                for ($i=2, $l=count($pathArr); $i<$l; $i++) {
 					//if(!is_null($collection->getItemById($pathArr[$i]))) { }
                     $name = $collection->getItemById($pathArr[$i])->getName();
                     $namePath .= (empty($namePath) ? '' : '/').trim($name);
@@ -1643,7 +1643,7 @@ if ($finalgroup_price_price != "") {
                 $catIds[] = $catId;
             }
         }
-        return join(',', $catIds);
+        return implode(',', $catIds);
     }
 	
 	protected function _removeFile( $file )

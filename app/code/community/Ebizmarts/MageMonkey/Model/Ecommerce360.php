@@ -120,7 +120,7 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
 		$subtotal = $this->_order->getBaseSubtotal();
 		$discount = (float)$this->_order->getBaseDiscountAmount();
 		if ($discount != 0) {
-			$subtotal = $subtotal + ($discount);
+			$subtotal += $discount;
 		}
         $createdAtArr = str_split($this->_order->getCreatedAt(), 10);
         $this->_info = array(
@@ -359,7 +359,7 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
                 $subtotal = $this->_order->getBaseSubtotal();
                 $discount = (float)$this->_order->getBaseDiscountAmount();
                 if ($discount != 0) {
-                    $subtotal = $subtotal + ($discount);
+                    $subtotal += $discount;
                 }
                 $createdAtArr = str_split($this->_order->getCreatedAt(), 10);
 

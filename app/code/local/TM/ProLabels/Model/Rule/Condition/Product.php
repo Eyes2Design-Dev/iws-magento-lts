@@ -178,7 +178,7 @@ class TM_ProLabels_Model_Rule_Condition_Product extends
             // remember old attribute state
             $oldAttrValue = $object->hasData($attrCode) ? $object->getData($attrCode) : null;
 
-            foreach ($this->_entityAttributeValues[$object->getId()] as $storeId => $value) {
+            foreach ($this->_entityAttributeValues[$object->getId()] as $value) {
                 $attr = $object->getResource()->getAttribute($attrCode);
                 if ($attr && $attr->getBackendType() == 'datetime') {
                     $value = strtotime($value);

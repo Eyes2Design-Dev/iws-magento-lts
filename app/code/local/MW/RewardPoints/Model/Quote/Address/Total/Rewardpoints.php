@@ -4,11 +4,11 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 	protected $array_whole_cart = array ();
 	protected $array_whole_cart_x_y = array ();
 	protected $array_rule_active = array ();
-	
+
 	public function __construct() {
 		$this->setCode ( 'reward_points' );
 	}
-	
+
 	public function collect(Mage_Sales_Model_Quote_Address $address) {
 		parent::collect ( $address );
 		$store_id = Mage::app ()->getStore ()->getId ();
@@ -27,20 +27,20 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 			$tax_new = $address->getBaseTaxAmount ();
 		if (! $check_shipping)
 			$shipping_new = $address->getBaseShippingInclTax ();
-			
+
 		// function check reward admin
 		$customer_id = $quote->getCustomerId ();
 		if ($customer_id) {
-			
+
 			$baseGrandTotal = $address->getBaseGrandTotal () - $tax_new - $shipping_new;
-			
+
 			if ($quote->getMwRewardpointDiscount () > $baseGrandTotal && $baseGrandTotal > 0) {
 				$quote->setMwRewardpointDiscount ( $baseGrandTotal );
 				$points = Mage::helper ( 'rewardpoints' )->exchangeMoneysToPoints ( $baseGrandTotal, $store_id );
 				$quote->setMwRewardpoint ( Mage::helper ( 'rewardpoints' )->roundPoints ( $points, $store_id ) )->save ();
 			}
 		}
-		
+
 		$items = $address->getAllVisibleItems ();
 		if (! count ( $items )) {
 			return $this;
@@ -63,13 +63,13 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 		$spend_reward_point_cart = 0;
 		$spend_sub_point = 0;
 		$spend_sub_money = 0;
-		
+
 		$spend_programs = $this->getSpendProgramResult ();
 		// earn point------------------
 		$earn_reward_point = 0;
 		$earn_reward_point_cart = 0;
 		$programs = $this->getEarnProgramResult ();
-		
+
 		//$discountAmountTiem = $baseTotalDiscountAmount;
 		$product_sell_point = 0;
 		$reward_point_detail = array ();
@@ -79,13 +79,13 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 			$mw_reward_point = 0;
 			$product_id = $item->getProductId ();
 			$qty = $item->getQty ();
-			
+
 			$mw_reward_point_sell = Mage::getModel ( 'catalog/product' )->load ( $product_id )->getData ( 'mw_reward_point_sell_product' );
 			if ($mw_reward_point_sell > 0)
-				$product_sell_point = $product_sell_point + $qty * $mw_reward_point_sell;
-			
+				$product_sell_point += $qty * $mw_reward_point_sell;
+
 			$price_withdiscount = $item->getBasePrice () - $item->getBaseDiscountAmount () / $qty;
-			
+
 			if ($appy_reward == MW_RewardPoints_Model_Appyreward::BEFORE){
 				if($applyRewardPointsTax == MW_RewardPoints_Model_Appyrewardtax::BEFORE)
 				$price = Mage::helper('checkout')->getPriceInclTax($item);
@@ -98,14 +98,14 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 				else
 				$price = $price_withdiscount;
 			}
-			
+
 			$mw_reward_point = $qty * Mage::getModel ( 'rewardpoints/catalogrules' )->getPointCatalogRulue ( $product_id );			
 			if ($item->getHasChildren () && $item->isChildrenCalculated ()) {
 				foreach ( $item->getChildren () as $child ) {
-					
+
 					$qty_child = $child->getQty ();
 					$price_product_withdiscount = $child->getBasePrice () - $child->getBaseDiscountAmount () / $qty_child;
-					
+
 					if ($appy_reward == MW_RewardPoints_Model_Appyreward::BEFORE){
 						if($applyRewardPointsTax == MW_RewardPoints_Model_Appyrewardtax::BEFORE)
 						$price_product = Mage::helper('checkout')->getPriceInclTax($child);
@@ -118,49 +118,49 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 						else
 						$price_product = $price_product_withdiscount;
 					}
-					
+
 					$array_spend_reward_point = $this->SpendProcessRule ( $child, $spend_programs, $qty_child, $price_product_withdiscount );
-					
+
 					if (( int ) $array_spend_reward_point [1] > 0)
-						$spend_sub_point = $spend_sub_point + $qty * $array_spend_reward_point [1];
+						$spend_sub_point += $qty * $array_spend_reward_point [1];
 					if (( double ) $array_spend_reward_point [2] > 0)
-						$spend_sub_money = $spend_sub_money + $qty * $array_spend_reward_point [2];
-					
+						$spend_sub_money += $qty * $array_spend_reward_point [2];
+
 					$reward_point_array = $this->processRuleConfigurableProduct ( $child, $programs, $qty_child, $price_product, $qty, $baseSubtotalWithDiscount );
 					$reward_point = $reward_point_array [1];
 					$rule_details = $reward_point_array [2];
-					
+
 					foreach ( $rule_details as $key => $rule_detail ) {
 						if (! isset ( $reward_point_detail [$key] ))
 							$reward_point_detail [$key] = 0;
-						$reward_point_detail [$key] = $reward_point_detail [$key] + $rule_detail;
+						$reward_point_detail [$key] += $rule_detail;
 					}
 					$earn_reward_point = $earn_reward_point + $reward_point + $mw_reward_point;
-					$earn_reward_point_cart = $earn_reward_point_cart + $reward_point;
-				
+					$earn_reward_point_cart += $reward_point;
+
 				}
 			} else {
-				
+
 				$array_spend_reward_point = $this->SpendProcessRule ( $item, $spend_programs, $qty, $price_withdiscount );
-				
+
 				if (( int ) $array_spend_reward_point [1] > 0){					
-					$spend_sub_point = $spend_sub_point + $array_spend_reward_point [1];
+					$spend_sub_point += $array_spend_reward_point [1];
 					}
 				if (( double ) $array_spend_reward_point [2] > 0)
-					$spend_sub_money = $spend_sub_money + $array_spend_reward_point [2];
-				
+					$spend_sub_money += $array_spend_reward_point [2];
+
 				$reward_point_array = $this->processRule ( $item, $programs, $qty, $price, $baseSubtotalWithDiscount );
-				
+
 				$reward_point = $reward_point_array [1];
 				$rule_details = $reward_point_array [2];
-				
+
 				foreach ( $rule_details as $key => $rule_detail ) {
 					if (! isset ( $reward_point_detail [$key] ))
 						$reward_point_detail [$key] = 0;
-					$reward_point_detail [$key] = $reward_point_detail [$key] + $rule_detail;
+					$reward_point_detail [$key] += $rule_detail;
 				}
 				$earn_reward_point = $earn_reward_point + $reward_point + $mw_reward_point;
-				$earn_reward_point_cart = $earn_reward_point_cart + $reward_point;
+				$earn_reward_point_cart += $reward_point;
 			}
 		}
 		Mage::getSingleton('checkout/session')->setQuoteIdSession("");
@@ -168,25 +168,25 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 		$array_rule_show = array_diff ( $programs, $this->array_rule_active );
 		//zend_debug::dump($array_rule_show);die(); 
 		$spend_sub_money_to_point = 0;
-		
+
 		if ($spend_sub_money >= 0) {
 			$spend_sub_money = $spend_sub_money + $tax + $shipping;
 			$spend_sub_money_to_point = Mage::helper ( 'rewardpoints' )->exchangeMoneysToPoints ( $spend_sub_money, $store_id );
 			//echo $spend_sub_money.'aaaaaa'.$spend_sub_point.'bbbb'.$spend_sub_money_to_point;
 		}
 		$spend_reward_point_cart = Mage::helper ( 'rewardpoints' )->roundPoints ( $spend_sub_point + $spend_sub_money_to_point, $store_id, false );
-		
+
 		$point_checkout = Mage::helper ( 'rewardpoints' )->exchangeMoneysToPoints ( $address->getBaseGrandTotal () - $tax_new - $shipping_new, $store_id );
-		
+
 		if ($spend_reward_point_cart > $point_checkout)
 			$spend_reward_point_cart = $point_checkout;
 		if ($quote->getMwRewardpoint () == $point_checkout)
 			$quote->setMwRewardpointDiscount ( $address->getBaseGrandTotal () - $tax_new - $shipping_new )->save ();
-		
+
 		$totalDiscountAmount = Mage::helper ( 'core' )->currency ( $quote->getMwRewardpointDiscount (), false, false );
 		$baseTotalDiscountAmount = $quote->getMwRewardpointDiscount ();
 		$quote->setMwRewardpointDiscountShow ( $totalDiscountAmount );
-		
+
 		if ($customer_id) {
 			if (! Mage::helper ( 'rewardpoints' )->checkCustomerMaxBalance ( $customer_id, $store_id ,$earn_reward_point)) {
 				$earn_reward_point = 0;
@@ -194,14 +194,14 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 				$reward_point_detail = array ();
 			}
 		}
-		
+
 		$quote->setSpendRewardpointCart ( $spend_reward_point_cart )->save ();
 		$quote->setEarnRewardpoint ( $earn_reward_point )->save ();
 		$quote->setEarnRewardpointCart ( $earn_reward_point_cart )->save ();
 		$quote->setMwRewardpointSellProduct ( $product_sell_point )->save ();
 		$quote->setMwRewardpointDetail ( serialize ( $reward_point_detail ) )->save ();
 		$quote->setMwRewardpointRuleMessage ( serialize ( $array_rule_show ) )->save ();
-		
+
 		//$address->setRewardPointsDiscount($totalDiscountAmount);
 		//$address->setBaseRewardPointsDiscount($baseTotalDiscountAmount);
 		$address->setMwRewardpoint ( $quote->getMwRewardpoint () );
@@ -211,12 +211,12 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 		$address->setGrandTotal ( $address->getGrandTotal () - $address->getMwRewardpointDiscountShow () );
 		$address->setBaseGrandTotal ( $address->getBaseGrandTotal () - ($address->getMwRewardpointDiscount ()) );
 		//$address->setBaseDiscountAmount($address->getBaseDiscountAmount()- ($address->getMwRewardpointDiscount()));
-		
+
 
 		return $this;
-	
+
 	}
-	
+
 	public function fetch(Mage_Sales_Model_Quote_Address $address) {
 		$amount = $address->getMwRewardpointDiscountShow ();
 		$store_id = Mage::app ()->getStore ()->getId ();
@@ -276,12 +276,12 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 			$group_id = Mage::getSingleton ( "customer/session" )->getCustomerGroupId ();
 		}
 		foreach ( $programs as $program ) {
-			
+
 			$customer_group_id = $model->load ( $program )->getCustomerGroupIds ();
 			$customer_group_ids = explode ( ',', $customer_group_id );
 			if (in_array ( $group_id, $customer_group_ids ))
 				$program_ids [] = $program;
-		
+
 		}
 		return $program_ids;
 	}
@@ -289,12 +289,12 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 		$program_ids = array ();
 		$store_id = Mage::app ()->getStore ()->getId ();
 		foreach ( $programs as $program ) {
-			
+
 			$store_view = $model->load ( $program )->getStoreView ();
 			$store_views = explode ( ',', $store_view );
 			if (in_array ( $store_id, $store_views ) or $store_views [0] == '0')
 				$program_ids [] = $program;
-		
+
 		}
 		return $program_ids;
 	}
@@ -304,7 +304,7 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 			$status = $model->load ( $program )->getStatus ();
 			if ($status == MW_RewardPoints_Model_Statusrule::ENABLED)
 				$program_ids [] = $program;
-		
+
 		}
 		return $program_ids;
 	}
@@ -316,7 +316,7 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 			$end_date = $cartrules->getEndDate ();
 			if (Mage::app ()->getLocale ()->isStoreDateInInterval ( null, $start_date, $end_date ))
 				$program_ids [] = $program;
-		
+
 		}
 		return $program_ids;
 	}
@@ -327,9 +327,9 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 			$rule_position = ( int ) $model->load ( $program )->getRulePosition ();
 			$array_program_position [] = $rule_position;
 			$program_ids [] = $program;
-		
+
 		}
-		if (sizeof ( $program_ids ) > 0)
+		if (count ( $program_ids ) > 0)
 			array_multisort ( $array_program_position, $program_ids );
 		return $program_ids;
 	}
@@ -350,39 +350,39 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 			if (($rule->validate ( $address )) && ($rule->getActions ()->validate ( $item ))) {
 				//$program_ids[] = $program;
 				if ($simple_action == MW_RewardPoints_Model_Typerule::FIXED) {
-					$result_reward_point = $result_reward_point + $reward_point;
+					$result_reward_point += $reward_point;
 					if (! isset ( $_result_detail [$program] ))
 						$_result_detail [$program] = 0;
-					$_result_detail [$program] = $_result_detail [$program] + $reward_point;
+					$_result_detail [$program] += $reward_point;
 				} else if ($simple_action == MW_RewardPoints_Model_Typerule::FIXED_WHOLE_CART) {
-					
+
 					if (! (isset ( $this->array_whole_cart [$program] ) && $this->array_whole_cart [$program] == 1)) {
 						$this->array_whole_cart [$program] = 1;
-						$result_reward_point = $result_reward_point + $reward_point;
+						$result_reward_point += $reward_point;
 						if (! isset ( $_result_detail [$program] ))
 							$_result_detail [$program] = 0;
-						$_result_detail [$program] = $_result_detail [$program] + $reward_point;
+						$_result_detail [$program] += $reward_point;
 					}
 				} else if ($simple_action == MW_RewardPoints_Model_Typerule::BUY_X_GET_Y_WHOLE_CART) {
 					if ($reward_step > 0) {
 						if (! (isset ( $this->array_whole_cart_x_y [$program] ) && $this->array_whole_cart_x_y [$program] == 1)) {
 							$this->array_whole_cart_x_y [$program] = 1;
-							$result_reward_point = $result_reward_point + ( int ) ($baseSubtotalWithDiscount / $reward_step) * $reward_point;
+							$result_reward_point += ( int ) ($baseSubtotalWithDiscount / $reward_step) * $reward_point;
 							if (! isset ( $_result_detail [$program] ))
 								$_result_detail [$program] = 0;
-							$_result_detail [$program] = $_result_detail [$program] + ( int ) ($baseSubtotalWithDiscount / $reward_step) * $reward_point;
+							$_result_detail [$program] += ( int ) ($baseSubtotalWithDiscount / $reward_step) * $reward_point;
 						}
 					}
-				
+
 				} else {
 					if ($reward_step > 0) {
-						$result_reward_point = $result_reward_point + ( int ) (($qty * $price) / $reward_step) * $reward_point;
+						$result_reward_point += ( int ) (($qty * $price) / $reward_step) * $reward_point;
 						if (! isset ( $_result_detail [$program] ))
 							$_result_detail [$program] = 0;
-						$_result_detail [$program] = $_result_detail [$program] + ( int ) (($qty * $price) / $reward_step) * $reward_point;
+						$_result_detail [$program] += ( int ) (($qty * $price) / $reward_step) * $reward_point;
 					}
 				}
-				
+
 				if (! in_array ( $program, $this->array_rule_active ))
 					$this->array_rule_active [] = $program;
 				if ($stop_rule) {
@@ -393,11 +393,11 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 					break;
 				}
 			}
-		
+
 		}
 		$result [1] = $result_reward_point;
 		$result [2] = $_result_detail;
-		
+
 		//return  $result_reward_point;
 		return $result;
 	}
@@ -418,39 +418,39 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 			if (($rule->validate ( $address )) && ($rule->getActions ()->validate ( $item ))) {
 				//$program_ids[] = $program;
 				if ($simple_action == MW_RewardPoints_Model_Typerule::FIXED) {
-					$result_reward_point = $result_reward_point + $reward_point;
+					$result_reward_point += $reward_point;
 					if (! isset ( $_result_detail [$program] ))
 						$_result_detail [$program] = 0;
-					$_result_detail [$program] = $_result_detail [$program] + $reward_point;
+					$_result_detail [$program] += $reward_point;
 				} else if ($simple_action == MW_RewardPoints_Model_Typerule::FIXED_WHOLE_CART) {
-					
+
 					if (! (isset ( $this->array_whole_cart [$program] ) && $this->array_whole_cart [$program] == 1)) {
 						$this->array_whole_cart [$program] = 1;
-						$result_reward_point = $result_reward_point + $reward_point;
+						$result_reward_point += $reward_point;
 						if (! isset ( $_result_detail [$program] ))
 							$_result_detail [$program] = 0;
-						$_result_detail [$program] = $_result_detail [$program] + $reward_point;
+						$_result_detail [$program] += $reward_point;
 					}
 				} else if ($simple_action == MW_RewardPoints_Model_Typerule::BUY_X_GET_Y_WHOLE_CART) {
 					if ($reward_step > 0) {
 						if (! (isset ( $this->array_whole_cart_x_y [$program] ) && $this->array_whole_cart_x_y [$program] == 1)) {
 							$this->array_whole_cart_x_y [$program] = 1;
-							$result_reward_point = $result_reward_point + ( int ) ($baseSubtotalWithDiscount / $reward_step) * $reward_point;
+							$result_reward_point += ( int ) ($baseSubtotalWithDiscount / $reward_step) * $reward_point;
 							if (! isset ( $_result_detail [$program] ))
 								$_result_detail [$program] = 0;
-							$_result_detail [$program] = $_result_detail [$program] + ( int ) ($baseSubtotalWithDiscount / $reward_step) * $reward_point;
+							$_result_detail [$program] += ( int ) ($baseSubtotalWithDiscount / $reward_step) * $reward_point;
 						}
 					}
-				
+
 				} else {
 					if ($reward_step > 0) {
-						$result_reward_point = $result_reward_point + ( int ) (($qty * $price * $qty_parent) / $reward_step) * $reward_point;
+						$result_reward_point += ( int ) (($qty * $price * $qty_parent) / $reward_step) * $reward_point;
 						if (! isset ( $_result_detail [$program] ))
 							$_result_detail [$program] = 0;
-						$_result_detail [$program] = $_result_detail [$program] + ( int ) (($qty * $price * $qty_parent) / $reward_step) * $reward_point;
+						$_result_detail [$program] += ( int ) (($qty * $price * $qty_parent) / $reward_step) * $reward_point;
 					}
 				}
-				
+
 				if (! in_array ( $program, $this->array_rule_active ))
 					$this->array_rule_active [] = $program;
 				if ($stop_rule) {
@@ -461,11 +461,11 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 					break;
 				}
 			}
-		
+
 		}
 		$result [1] = $result_reward_point;
 		$result [2] = $_result_detail;
-		
+
 		//return  $result_reward_point;
 		return $result;
 	}
@@ -481,7 +481,7 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 			$reward_step = ( int ) $rule->getRewardStep ();
 			$rule->afterLoad ();
 			$address = $this->getAddress_new ( $item );
-			
+
 			if (($rule->validate ( $address )) && ($rule->getActions ()->validate ( $item ))) {
 				if ($simple_action == MW_RewardPoints_Model_Typerulespend::FIXED) {
 					//dungdk per order
@@ -489,21 +489,21 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 						$array_result [1] = 0;
 						$array_result [2] = 0;
 					}else{
-						$array_result [1] = $array_result [1] + $reward_point;
+						$array_result [1] += $reward_point;
 						$array_result [2] = 0;
 					}					
 					Mage::getSingleton('checkout/session')->setQuoteIdSession($item->getQuoteId());
-				
+
 				} else if ($simple_action == MW_RewardPoints_Model_Typerulespend::BUY_X_USE_Y) {
-					
+
 					if ($reward_step > 0)
-						$array_result [1] = $array_result [1] + ( int ) (($qty * $price) / $reward_step) * $reward_point;
+						$array_result [1] += ( int ) (($qty * $price) / $reward_step) * $reward_point;
 					$array_result [2] = 0;
-				
+
 				} else if ($simple_action == MW_RewardPoints_Model_Typerulespend::USE_UNLIMIT_POINTS) {
 					$array_result [1] = 0;
 					$array_result [2] = $qty * $price;
-				
+
 				} else if ($simple_action == MW_RewardPoints_Model_Typerulespend::NOT_ALLOW_USE_POINTS) {
 					$array_result [1] = 0;
 					$array_result [2] = 0;
@@ -515,7 +515,7 @@ class MW_RewardPoints_Model_Quote_Address_Total_Rewardpoints extends Mage_Sales_
 		}
 		return $array_result;
 	}
-	
+
 	protected function getAddress_new(Mage_Sales_Model_Quote_Item_Abstract $item) {
 		if ($item instanceof Mage_Sales_Model_Quote_Address_Item) {
 			$address = $item->getAddress ();

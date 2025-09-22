@@ -50,7 +50,7 @@ class RocketWeb_UpsAddressTypeValidator_AddressController extends Mage_Adminhtml
 			$_street	= $_request->getQuery('_street');
 			// City
 			$_zip		= $_request->getQuery('_zip');
-	            
+
 			// If the country code is missing or it is not US
 			if(!$_countryCode || $_countryCode !== 'US')
 			{

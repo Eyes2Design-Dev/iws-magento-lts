@@ -17,7 +17,7 @@ class Amasty_Customerattr_Adminhtml_GroupSelectorController extends Mage_Adminht
                 ->load()
                 ->toOptionArray();
             
-            foreach($groupValues as $key=>$val) {
+            foreach($groupValues as $val) {
                 $response[$val['value']] = $val['label'];
             }
             

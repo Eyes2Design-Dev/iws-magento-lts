@@ -4,12 +4,12 @@ class MW_RewardPoints_Model_Api_Api extends Mage_Api_Model_Resource_Abstract
 {
 	public function getcustomeridbyemail($data)
 	{
-		if(sizeof($data)>= 1 && sizeof($data)<= 2)
+		if(count($data)>= 1 && count($data)<= 2)
 		{
 			$website_id = Mage::getModel('core/website')->load( 'base', 'code')->getId();
 			if(is_array($data)){
 				$customer_email = $data[0];
-				if(sizeof($data) == 2){
+				if(count($data) == 2){
 					if($data[1] != '') $website_id = $data[1];
 				}
 			}else{
@@ -32,12 +32,12 @@ class MW_RewardPoints_Model_Api_Api extends Mage_Api_Model_Resource_Abstract
 	}
 	public function getbalancebyemail($data)
 	{
-		if(sizeof($data)>= 1 && sizeof($data)<= 2)
+		if(count($data)>= 1 && count($data)<= 2)
 		{
 			$website_id = Mage::getModel('core/website')->load( 'base', 'code')->getId();
 			if(is_array($data)){
 				$customer_email = $data[0];
-				if(sizeof($data) == 2){
+				if(count($data) == 2){
 					if($data[1] != '') $website_id = $data[1];
 				}
 			}else{
@@ -63,7 +63,7 @@ class MW_RewardPoints_Model_Api_Api extends Mage_Api_Model_Resource_Abstract
 	}
 	public function updatepoints($data)
 	{
-		if(sizeof($data) == 3)
+		if(count($data) == 3)
 		{
 			$customer_id = (int)$data[0];
 			$customer = Mage::getModel('customer/customer')->load($customer_id);

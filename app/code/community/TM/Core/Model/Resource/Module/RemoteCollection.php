@@ -78,7 +78,7 @@ class TM_Core_Model_Resource_Module_RemoteCollection extends Varien_Data_Collect
             );
         }
 
-        foreach ($modules as $moduleName => $values) {
+        foreach ($modules as $values) {
             $values['id'] = $values['code'];
             $this->_collectedModules[$values['code']] = $values;
         }

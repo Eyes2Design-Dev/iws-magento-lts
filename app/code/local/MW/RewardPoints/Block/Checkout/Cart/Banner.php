@@ -25,9 +25,9 @@ class MW_RewardPoints_Block_Checkout_Cart_Banner extends Mage_Core_Block_Templat
     public function _toHtml()
     {
         $store_id = Mage::app()->getStore()->getId();
-    	if(!(Mage::helper('rewardpoints/data')->moduleEnabled()) || !sizeof($this->getBannerRules()) || !(Mage::helper('rewardpoints/data')->getEnablePromotionBanner($store_id)))
+    	if(!(Mage::helper('rewardpoints/data')->moduleEnabled()) || !count($this->getBannerRules()) || !(Mage::helper('rewardpoints/data')->getEnablePromotionBanner($store_id)))
         	return '';
-        if (!sizeof($this->getBannerRules()))
+        if (!count($this->getBannerRules()))
             return '';
         $html = $this->renderView();
         

@@ -18,10 +18,10 @@
  * Copyright (c) 2008, Avalara.  All rights reserved.
  */
 
-class GetTaxHistoryRequest extends TaxRequest 
+class GetTaxHistoryRequest extends TaxRequest
 {
     private $DetailLevel;   
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -29,7 +29,7 @@ class GetTaxHistoryRequest extends TaxRequest
 		$this->DocType = DocumentType::$SalesOrder;  // this is right Document
 
     }
-	
+
     /**
      * Specifies the level of detail to return.
      * 

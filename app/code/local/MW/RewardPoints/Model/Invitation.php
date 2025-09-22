@@ -45,7 +45,7 @@ class MW_RewardPoints_Model_Invitation extends Mage_Core_Model_Abstract
 			->addFieldToFilter('customer_id',$customer_id)
 			;
 			
-			if(!sizeof($transactions))
+			if(!count($transactions))
 			{
 				Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer_id, 0);	
 				$_customer = Mage::getModel('rewardpoints/customer')->load($customer_id);

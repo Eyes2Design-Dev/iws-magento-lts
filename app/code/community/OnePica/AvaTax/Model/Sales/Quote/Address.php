@@ -150,7 +150,7 @@ class OnePica_AvaTax_Model_Sales_Quote_Address extends Mage_Sales_Model_Quote_Ad
     {
         $this->_totalAmounts[$code] = $amount;
         if ($code != 'subtotal') {
-            $code = $code.'_amount';
+            $code .= '_amount';
         }
         $this->setData($code, $amount);
         return $this;
@@ -167,7 +167,7 @@ class OnePica_AvaTax_Model_Sales_Quote_Address extends Mage_Sales_Model_Quote_Ad
     {
         $this->_baseTotalAmounts[$code] = $amount;
         if ($code != 'subtotal') {
-            $code = $code.'_amount';
+            $code .= '_amount';
         }
         $this->setData('base_'.$code, $amount);
         return $this;

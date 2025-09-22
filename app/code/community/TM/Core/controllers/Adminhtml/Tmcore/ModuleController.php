@@ -79,7 +79,7 @@ class TM_Core_Adminhtml_Tmcore_ModuleController extends Mage_Adminhtml_Controlle
 
         $groupedErrors = $module->getMessageLogger()->getErrors();
         if (count($groupedErrors)) {
-            foreach ($groupedErrors as $type => $errors) {
+            foreach ($groupedErrors as $errors) {
                 foreach ($errors as $error) {
                     if (is_array($error)) {
                         $message = $error['message'];

@@ -11,9 +11,9 @@ class FilterRequest {
   function __construct()
   {
   	$this->MaxCount=0;
-  	
+
   }
-  
+
   public function setFilters($value){$this->Filters=$value;} // string
   public function getFilters(){return $this->Filters;} // string
 

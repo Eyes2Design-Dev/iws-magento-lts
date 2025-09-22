@@ -639,7 +639,7 @@ class Amasty_Base_Model_Conflicts{
 
     protected function outCrontabConfig(&$data) {
         $this->_out[] = '<b>Crontab Configuration</b>';
-        
+
         $this->_out[] = '<ul>';
         foreach($data as $cronCommand) {
             $this->_out[] = '<li>' . $cronCommand . '</li>';

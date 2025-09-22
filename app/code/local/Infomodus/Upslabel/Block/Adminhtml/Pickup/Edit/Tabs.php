@@ -25,7 +25,7 @@ class Infomodus_Upslabel_Block_Adminhtml_Pickup_Edit_Tabs extends Mage_Adminhtml
           'title'     => Mage::helper('upslabel')->__('Pickup Information'),
           'content'   => $this->getLayout()->createBlock('upslabel/adminhtml_pickup_edit_tab_form')->toHtml(),
       ));
-     
+
       return parent::_beforeToHtml();
   }
 }

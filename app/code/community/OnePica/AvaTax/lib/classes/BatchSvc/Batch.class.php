@@ -20,7 +20,7 @@ class Batch {
   private $Options; // string
   private $RecordCount; // int
   private $CurrentRecord; // int
-  
+
   function __construct()
   {
   	$this->AccountId=0;
@@ -29,13 +29,13 @@ class Batch {
   	$this->ModifiedUserId=0;
   	$this->RecordCount=0;
   	$this->CurrentRecord=0;
-  	
+
   	$this->CreatedDate=getCurrentDate();
   	$this->CompletedDate=getCurrentDate();
   	$this->ModifiedDate=getCurrentDate();
-  	
-  	
-  	
+
+
+
   }
 
   public function setAccountId($value){$this->AccountId=$value;} // int

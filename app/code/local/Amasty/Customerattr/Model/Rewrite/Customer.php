@@ -30,7 +30,7 @@ class Amasty_Customerattr_Model_Rewrite_Customer extends Mage_Customer_Model_Cus
     {
         if ($this->_fileAttributes) {
             $deleteFiles = Mage::app()->getRequest()->getPost('amcustomerattr_delete');
-            foreach ($this->_fileAttributes as $id => $attributeCode) {
+            foreach ($this->_fileAttributes as $attributeCode) {
                 if (isset($_FILES['amcustomerattr_' . $attributeCode]['error']) && UPLOAD_ERR_OK == $_FILES['amcustomerattr_' . $attributeCode]['error']) {
                     try {
                         $fileName = $_FILES['amcustomerattr_' . $attributeCode]['name'];

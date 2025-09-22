@@ -39,7 +39,7 @@ class Amasty_Customerattr_Block_Customer_Fields extends Mage_Core_Block_Template
     {
     	$elements = $this->getData('fields');
     	$newElements = array();
-    	foreach ($elements as $key => $code) {
+    	foreach ($elements as $code) {
     		if (!Amasty_Customerattr_Block_Customer_Fields::elementAlreadyRendered($code)) {
 	    		$newElements[] = $code;
     		}

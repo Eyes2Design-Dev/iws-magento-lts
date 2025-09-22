@@ -12,14 +12,14 @@ class Infomodus_Upslabel_Block_Adminhtml_Upslabel_Edit extends Mage_Adminhtml_Bl
     public function __construct()
     {
         parent::__construct();
-                 
+
         $this->_objectId = 'id';
         $this->_blockGroup = 'upslabel';
         $this->_controller = 'adminhtml_upslabel';
-        
+
         $this->_updateButton('save', 'label', Mage::helper('upslabel')->__('Save Item'));
         //$this->_updateButton('delete', 'label', Mage::helper('upslabel')->__('Delete Item'));
-		
+
         $this->_addButton('saveandcontinue', array(
             'label'     => Mage::helper('adminhtml')->__('Save And Continue Edit'),
             'onclick'   => 'saveAndContinueEdit()',

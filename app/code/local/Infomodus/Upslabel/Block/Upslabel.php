@@ -12,13 +12,13 @@ class Infomodus_Upslabel_Block_Upslabel extends Mage_Core_Block_Template
     {
 		return parent::_prepareLayout();
     }
-    
+
      public function getUpslabel()     
      { 
         if (!$this->hasData('upslabel')) {
             $this->setData('upslabel', Mage::registry('upslabel'));
         }
         return $this->getData('upslabel');
-        
+
     }
 }

@@ -196,7 +196,7 @@ class TM_SoldTogether_Adminhtml_CustomerController extends Mage_Adminhtml_Contro
 
             $i = 0;
             $newReindexData = array();
-            foreach ($reindexData as $reindexArr => $values){
+            foreach ($reindexData as $values){
                 $newReindexData[$i] = array();
                 $temp = $values;
                 $j = 0;

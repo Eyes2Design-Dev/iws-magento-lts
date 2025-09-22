@@ -17,7 +17,7 @@ class MW_RewardPoints_Model_Activerules extends Mage_Core_Model_Abstract
 	
 	        $active_point = $active_points->getFirstItem();
 			
-			if(sizeof($active_point) > 0){
+			if(count($active_point) > 0){
 				$result_reward_point = $active_point->getRuleId();
 			}
 		}
@@ -79,7 +79,7 @@ class MW_RewardPoints_Model_Activerules extends Mage_Core_Model_Abstract
         $active_points->getSelect()->where("md5(rule_id)='".trim($rule_id_md5)."'");
         $active_point = $active_points->getFirstItem();
 		
-		if(sizeof($active_point) > 0){
+		if(count($active_point) > 0){
 			$result_reward_point = $active_point->getRuleId();
 		}
 		return $result_reward_point;
@@ -98,7 +98,7 @@ class MW_RewardPoints_Model_Activerules extends Mage_Core_Model_Abstract
         $active_points->getSelect()->where("md5(rule_id)='".trim($rule_id_md5)."'");
         $active_point = $active_points->getFirstItem();
 		
-		if(sizeof($active_point) > 0){
+		if(count($active_point) > 0){
 			$default_expired = $active_point->getDefaultExpired();
 			$expired_day = $active_point->getExpiredDay();
 			$reward_point = $active_point->getRewardPoint();
@@ -153,7 +153,7 @@ class MW_RewardPoints_Model_Activerules extends Mage_Core_Model_Abstract
 		$active_points = Mage::getModel('rewardpoints/activerules')->getCollection()
 					->addFieldToFilter('type_of_transaction', $type_of_transaction)
 					->addFieldToFilter('status', MW_RewardPoints_Model_Statusrule::ENABLED);
-		if(sizeof($active_points) > 0){
+		if(count($active_points) > 0){
 			foreach ($active_points as $active_point) {
 				$default_expired = $active_point->getDefaultExpired();
 				$expired_day = $active_point->getExpiredDay();
@@ -182,7 +182,7 @@ class MW_RewardPoints_Model_Activerules extends Mage_Core_Model_Abstract
 		$active_points = Mage::getModel('rewardpoints/activerules')->getCollection()
 					->addFieldToFilter('type_of_transaction', $type_of_transaction)
 					->addFieldToFilter('status', MW_RewardPoints_Model_Statusrule::ENABLED);
-		if(sizeof($active_points) > 0){
+		if(count($active_points) > 0){
 			foreach ($active_points as $active_point) {
 				$reward_point = $active_point->getRewardPoint();
 				$store_view = $active_point->getStoreView();

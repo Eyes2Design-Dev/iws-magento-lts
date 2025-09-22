@@ -345,7 +345,7 @@ class CommerceExtensions_Productimportexport_Model_Convert_Parser_Productexport
         }
 
         // set importinted to adaptor
-        if (sizeof($inventoryFields) > 0) {
+        if (count($inventoryFields) > 0) {
             Mage::register('current_imported_inventory', $inventoryFields);
             //$this->setInventoryItems($inventoryFields);
         } // end setting imported to adaptor
@@ -393,7 +393,7 @@ class CommerceExtensions_Productimportexport_Model_Convert_Parser_Productexport
                 'websites'      => '',
                 'attribute_set' => $this->getAttributeSetName($product->getEntityTypeId(), $product->getAttributeSetId()),
                 'type'          => $product->getTypeId(),
-                'category_ids'  => join(',', $product->getCategoryIds())
+                'category_ids'  => implode(',', $product->getCategoryIds())
             );
 
             if ($this->getStore()->getCode() == Mage_Core_Model_Store::ADMIN_CODE) {
@@ -402,7 +402,7 @@ class CommerceExtensions_Productimportexport_Model_Convert_Parser_Productexport
                     $websiteCode = Mage::app()->getWebsite($websiteId)->getCode();
                     $websiteCodes[$websiteCode] = $websiteCode;
                 }
-                $row['websites'] = join(',', $websiteCodes);
+                $row['websites'] = implode(',', $websiteCodes);
             }
             else {
                 $row['websites'] = $this->getStore()->getWebsite()->getCode();
@@ -463,7 +463,7 @@ class CommerceExtensions_Productimportexport_Model_Convert_Parser_Productexport
                         continue;
                     }
                     if (is_array($option)) {
-                        $value = join(self::MULTI_DELIMITER, $option);
+                        $value = implode(self::MULTI_DELIMITER, $option);
                     } else {
                         $value = $option;
                     }
@@ -494,7 +494,7 @@ class CommerceExtensions_Productimportexport_Model_Convert_Parser_Productexport
 						
 				#$row['product_id'] =  $product->getId();
 				if($this->getVar('export_category_paths') == "true") {
-					 
+
 					  /* ADDITIONAL CATEGORY ID EXPORT FOR 1.4 ONLY [START] */
 					 $finalcategoryIds = "";
 					 $resource = Mage::getSingleton('core/resource');
@@ -507,7 +507,7 @@ class CommerceExtensions_Productimportexport_Model_Convert_Parser_Productexport
 					 }
 					 $row['categorys_ids'] = substr_replace($finalcategoryIds,"",-1);
 					 /* ADDITIONAL CATEGORY ID EXPORT FOR 1.4 ONLY [END] */
-					 
+
 					 /* PRODUCT CATEGORIES EXPORT START */
 						#print_r($row['categorys_ids']);
 						if($row['categorys_ids'] != "") {
@@ -537,12 +537,12 @@ class CommerceExtensions_Productimportexport_Model_Convert_Parser_Productexport
 							}
 							$okforallcategoriesnow = substr_replace($finalimportofcategories,"",-3);
 							$row['categories'] = $okforallcategoriesnow;
-							
+
 						}
 					/* PRODUCT CATEGORIES EXPORT END */
 					 
 				} else {
-					 
+
 					 /* ADDITIONAL CATEGORY ID EXPORT FOR 1.4 ONLY [START] */
 					 $finalcategoryIds = "";
 					 $resource = Mage::getSingleton('core/resource');

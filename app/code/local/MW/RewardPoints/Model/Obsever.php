@@ -88,7 +88,7 @@ class MW_RewardPoints_Model_Obsever
         $customer_group_id = Mage::getModel('customer/customer')->load($customer_id)->getGroupId();
 
         $results = Mage::getModel('rewardpoints/activerules')->getPointByRuleId($rule_id,$customer_group_id,$store_id);
-		if(!sizeof($transactions) && Mage::helper('rewardpoints')->checkCustomerMaxBalance($customer_id,$store_id,$results[0]))
+		if(!count($transactions) && Mage::helper('rewardpoints')->checkCustomerMaxBalance($customer_id,$store_id,$results[0]))
 		{
 			Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer_id, 0);	
 			$_customer = Mage::getModel('rewardpoints/customer')->load($customer_id);
@@ -126,7 +126,7 @@ class MW_RewardPoints_Model_Obsever
 		if($cokie){
 			$rule_id = $cokie;
 			$store_id = Mage::app()->getStore()->getId();
-			
+
 			$this->processCustomRule($customer_id,$type_of_transaction,$rule_id,$store_id);
 			//Mage::getModel('core/cookie')->delete('mw_reward_rule');	
 		}
@@ -470,11 +470,11 @@ class MW_RewardPoints_Model_Obsever
 		/*
 		$product_ids = Mage::getModel('catalog/product')->getCollection()->addAttributeToFilter('mw_reward_point_sell_product',array('gt' => 0))->getAllIds();
 		$product = $observer->getProduct();
-		
+
 		if(in_array($product->getId(), $product_ids)  ){
 			$product->setFinalPrice(0);
 		}	
-			
+
 		$product = $observer->getProduct();
 		//zend_debug::dump()
 		if($product->getData('reward_point_product')>0 ){
@@ -510,7 +510,7 @@ class MW_RewardPoints_Model_Obsever
 					->addFieldToFilter('type_of_transaction', $type_of_transaction)
 					->addFieldToFilter('date_event', array('like' => '%'.$year.'-'.$month.'-'.$day))
 					->addFieldToFilter('status', MW_RewardPoints_Model_Statusrule::ENABLED);
-		if(sizeof($active_points) > 0){
+		if(count($active_points) > 0){
 			foreach ($active_points as $active_point) {
 				$points = (int)$active_point->getRewardPoint();
 				if($points > 0) $rule_id = $active_point->getRuleId();
@@ -604,7 +604,7 @@ class MW_RewardPoints_Model_Obsever
 					->addFieldToFilter('type_of_transaction',$type_of_transaction)
 					->addFieldToFilter('transaction_detail',$year)
 					->addFieldToFilter('status',array('in'=>array(MW_RewardPoints_Model_Status::COMPLETE)));
-				if(sizeof($transactions) == 0)
+				if(count($transactions) == 0)
 				{
 					Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer_id, 0);
 					$_customer = Mage::getModel('rewardpoints/customer')->load($customer_id);
@@ -669,13 +669,13 @@ class MW_RewardPoints_Model_Obsever
 									->setOrder('entity_id', 'ASC');
 			$collection_products->getSelect()->limit($limit);
 										
-			if(sizeof($collection_products) > 0)
+			if(count($collection_products) > 0)
 			{
 				$catalogrules = $this ->getCatalogRulesByEnable();
 				$catalogrules = $this ->getCatalogRulesByTime($catalogrules);
 				$catalogrules = $this ->getCatalogRulesByPostion($catalogrules);
 				//var_dump($catalogrules);die();
-				if(sizeof($catalogrules) >0){
+				if(count($catalogrules) >0){
 					$catalogrules_select = array();
 					foreach ($catalogrules as $catalogrule_id) {
 						$catalogrules_select[] = $catalogrule_id;
@@ -711,7 +711,7 @@ class MW_RewardPoints_Model_Obsever
 											else $data['reward_point'] = (int)($final_price * $reward_point)/$reward_step;
 										}
 									}
-									if(sizeof($check_inserts) == 0){
+									if(count($check_inserts) == 0){
 										if($data['reward_point'] > 0) Mage::getModel('rewardpoints/productpoint') ->setData($data) ->save();
 									}else{
 										foreach($check_inserts as $check_insert)
@@ -749,7 +749,7 @@ class MW_RewardPoints_Model_Obsever
 				}
 			}
 		}
-		if(sizeof(Mage::getModel('catalog/product')->getCollection()) <= $limit ){
+		if(count(Mage::getModel('catalog/product')->getCollection()) <= $limit ){
 			Mage::getModel('core/config')->saveConfig('mw_reward_last_id',-1);
 			Mage::getConfig()->reinit();
 		}
@@ -760,7 +760,7 @@ class MW_RewardPoints_Model_Obsever
 		$catalogrules = array();
 		$collection_catalogrules = Mage::getModel('rewardpoints/catalogrules')->getCollection()
 						->addFieldToFilter('status', MW_RewardPoints_Model_Statusrule::ENABLED);
-		if(sizeof($collection_catalogrules) >0){
+		if(count($collection_catalogrules) >0){
 			foreach ($collection_catalogrules as $collection_catalogrule) {
 				$catalogrules[] = $collection_catalogrule->getRuleId();
 			}
@@ -792,7 +792,7 @@ class MW_RewardPoints_Model_Obsever
 			$catalog_rule_ids[] = $catalogrule;
     		
     	}
-    	if(sizeof($catalog_rule_ids) >0) array_multisort($array_position, $catalog_rule_ids);
+    	if(count($catalog_rule_ids) >0) array_multisort($array_position, $catalog_rule_ids);
     	return $catalog_rule_ids;
 	}
 	

@@ -10,10 +10,10 @@ class Amasty_Customerattr_Model_Registration
     {
         /*$model = $observer->getModel();
         $id = $model->getId();
-        
+
         $attribute = 60400000000 + $id;
         $attribute = '0' . $attribute;
-        
+
         $model->setCustIdWr($attribute);
         $model->save();*/
     }

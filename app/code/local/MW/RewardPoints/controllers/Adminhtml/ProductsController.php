@@ -49,7 +49,7 @@ class MW_Rewardpoints_Adminhtml_ProductsController extends Mage_Adminhtml_Contro
 						if($line >1){
 							$content = str_replace('"','',$tmp);
 							$productInfo = explode(',',$content);
-							if(sizeof($productInfo) == 3)
+							if(count($productInfo) == 3)
 							{
 								if($productInfo[0] && $productInfo[0] !='')
 									$product = Mage::getModel('catalog/product')->setWebsiteId($website_id)->load($productInfo[0]);
@@ -76,7 +76,7 @@ class MW_Rewardpoints_Adminhtml_ProductsController extends Mage_Adminhtml_Contro
 						$line  ++;
 					}
 					
-					if(sizeof($errors))
+					if(count($errors))
 					{
 						$err = Mage::helper('rewardpoints')->__("Some errors occur while importing points")."<br>";
 						foreach($errors as $error)

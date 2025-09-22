@@ -35,7 +35,7 @@ class Infomodus_Upslabel_Adminhtml_PdflabelsController extends Mage_Core_Control
         $i = 0;
         $collections = Mage::getModel('upslabel/upslabel');
         $colls = $collections->getCollection()->addFieldToFilter('order_id', $order_id)->addFieldToFilter('shipment_id', $shipment_id)->addFieldToFilter('type', $type)->addFieldToFilter('status', 0);
-        foreach ($colls AS $k => $v) {
+        foreach ($colls AS $v) {
             $coll = $v['upslabel_id'];
             break;
         }
@@ -100,7 +100,7 @@ class Infomodus_Upslabel_Adminhtml_PdflabelsController extends Mage_Core_Control
             $collections = Mage::getModel('upslabel/upslabel');
             $colls = $collections->getCollection()->addFieldToFilter($ptype . '_id', $order_id)->addFieldToFilter('type', $type)->addFieldToFilter('status', 0);
             if ($colls) {
-                foreach ($colls AS $k => $v) {
+                foreach ($colls AS $v) {
                     $coll = $v['upslabel_id'];
                     $collection = Mage::getModel('upslabel/upslabel')->load($coll);
                     if (($collection->getOrderId() == $order_id && $ptype=="order") || ($collection->getShipmentId() == $order_id && $ptype!="order")) {

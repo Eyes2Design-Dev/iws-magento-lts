@@ -24,7 +24,7 @@ class MW_RewardPoints_Model_Tag_Product
 						->addFieldToFilter('type_of_transaction',MW_RewardPoints_Model_Type::TAGGING_PRODUCT)
 						->addFieldToFilter('customer_id',$customer_id)
 						->addFieldToFilter('transaction_detail',$product_id);
-				if(!sizeof($transactions))
+				if(!count($transactions))
 				{
 					Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer_id, 0);	
                    	$_customer = Mage::getModel('rewardpoints/customer')->load($customer_id);

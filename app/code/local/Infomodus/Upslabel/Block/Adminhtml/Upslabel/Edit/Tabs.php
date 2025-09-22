@@ -25,7 +25,7 @@ class Infomodus_Upslabel_Block_Adminhtml_Upslabel_Edit_Tabs extends Mage_Adminht
           'title'     => Mage::helper('upslabel')->__('Item Information'),
           'content'   => $this->getLayout()->createBlock('upslabel/adminhtml_upslabel_edit_tab_form')->toHtml(),
       ));
-     
+
       return parent::_beforeToHtml();
   }
 }

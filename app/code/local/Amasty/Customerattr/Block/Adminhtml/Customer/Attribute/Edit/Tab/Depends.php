@@ -125,7 +125,7 @@ class Amasty_Customerattr_Block_Adminhtml_Customer_Attribute_Edit_Tab_Depends ex
                 }
             }
             else{
-               foreach($groupValues as $key=>$val){
+               foreach($groupValues as $val){
                     $value = array();
                     foreach ($optionCollection as $option) {
                         if($val['value'] == $option->getGroupId()){

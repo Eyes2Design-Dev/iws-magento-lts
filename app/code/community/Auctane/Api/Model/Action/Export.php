@@ -128,10 +128,10 @@ class Auctane_Api_Model_Action_Export
 
         $gift = Mage::helper('giftmessage/message')->getGiftMessage($order->getGiftMessageId());
         $order->setGift($gift->isObjectNew() ? 'false' : 'true');
-        
+
         $sender = $gift->getSender();
         $recipient = $gift->getRecipient();
-        
+
         if (!$gift->isObjectNew()) {
             $message = sprintf("From: %s\nTo: %s\nMessage: %s", $sender, $recipient, $gift->getMessage());
             $order->setGiftMessage($message);
@@ -163,7 +163,7 @@ class Auctane_Api_Model_Action_Export
         $xml->startElement('Items');
         //Check for the bundle child product to import
         $intImportChildProducts = Mage::getStoreConfig('auctaneapi/general/import_child_products');
-        
+
         /* @var $item Mage_Sales_Model_Order_Item */
         foreach ($order->getItemsCollection($helper->getIncludedProductTypes()) as $item) {
             $isBundle = 0;
@@ -184,7 +184,7 @@ class Auctane_Api_Model_Action_Export
 
             $this->_orderItem($item, $xml, $storeId, $isBundle);
         }
-        
+
         $intImportDiscount = Mage::getStoreConfig('auctaneapi/general/import_discounts');
         $fltOrderDiscount = $order->getDiscountAmount();
         if ($intImportDiscount != 2 && $fltOrderDiscount != 0.0000) {
@@ -266,7 +266,7 @@ class Auctane_Api_Model_Action_Export
         $product = Mage::getModel('catalog/product')
                 ->setStoreId($storeId)
                 ->load($item->getProductId());
-        
+
         // inherit some attributes from parent product item
         if (($parentProduct = $this->_getOrderItemParentProduct($item, $storeId))) {
             if (!$product->getImage() || ($product->getImage() == 'no_selection')) {

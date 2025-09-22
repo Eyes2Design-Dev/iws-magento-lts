@@ -38,7 +38,7 @@ class Amasty_Perm_Model_Mysql4_Perm extends Mage_Core_Model_Mysql4_Abstract
         if (!$customerIds)
             return;
 
-        $db->delete($this->getTable('amperm/perm'), "cid IN (".join(',', $customerIds).")");
+        $db->delete($this->getTable('amperm/perm'), "cid IN (".implode(',', $customerIds).")");
 
         $sql = 'INSERT INTO `' . $this->getTable('amperm/perm') . '` (`uid`, `cid`) VALUES ';
         foreach ($customerIds as $id) {

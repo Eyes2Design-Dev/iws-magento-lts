@@ -7,7 +7,7 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 		{
 			$order = $argv->getOrder();
 			//$quote = Mage::getSingleton('checkout/session')->getQuote();
-			
+
 			//$quote = $order->getQuote();
 			$quote = $argv->getQuote();
             if (!$quote instanceof Mage_Sales_Model_Quote) {
@@ -15,21 +15,21 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
                         ->setSharedStoreIds(array($order->getStoreId()))
                         ->load($order->getQuoteId());
             }
-            
+
 		 	if($quote->getCheckoutMethod(true) == Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER){
     			Mage::getModel('rewardpoints/customer')->customerSaveAfterRegister($order);
 			}
-			
-			
+
+
 			$customer = Mage::getModel('customer/customer')->load($order->getCustomerId());
 			$store_id = Mage::app()->getStore()->getId();
 	    	if($customer->getId()){
-	    		
+
 	    		Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer->getId(), 0);	
 				$_customer = Mage::getModel('rewardpoints/customer')->load($customer->getId());
 				$earn_rewardpoint = (int)$quote->getEarnRewardpoint();
 				$rewardpoints = (int)$quote->getMwRewardpoint();
-				
+
 
 	    		//Subtract reward points of customer and save reward points to order if customer use this point to checkout
 				$rewardpoints_new = $rewardpoints + (int)$quote->getMwRewardpointSellProduct();
@@ -50,10 +50,10 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 									         'point_remaining'=>0,
 		            	                     'history_order_id'=>$order->getId(),
 							            	 'status'=>MW_RewardPoints_Model_Status::COMPLETE);
-		            	
+
 		           		$_customer->saveTransactionHistory($historyData);
 		           		Mage::helper('rewardpoints')->sendEmailCustomerPointChanged($_customer->getId(),$historyData, $store_id);
-		           		
+
 		           		// process expired points when spent point
 			           	Mage::helper('rewardpoints/data')->processExpiredPointsWhenSpentPoints($_customer->getId(), $rewardpoints_new);
 	            	}
@@ -66,7 +66,7 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 	           							'earn_rewardpoint'=> $earn_rewardpoint,
 						           		'money'=>$discount,
 						           		'reward_point_money_rate'=>Mage::helper('rewardpoints')->getPointMoneyRateConfig($store_id));
-	           		
+
 	           		$_order = Mage::getModel('rewardpoints/rewardpointsorder');
 	           		$_order->saveRewardOrder($orderData);
 	            }
@@ -95,12 +95,12 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 		            }
     				$detail[1] = $_detail_rule_result;
     				$detail[2] = $_detail_products;
-    				
+
     				$results = Mage::helper('rewardpoints/data')->getTransactionExpiredPoints($earn_rewardpoint,$store_id);
     				$expired_day = $results[0];
 					$expired_time = $results[1] ;
 					$point_remaining = $results[2];
-		
+
 	            	$historyData = array('type_of_transaction'=>MW_RewardPoints_Model_Type::CHECKOUT_ORDER_NEW,
 						           		 'amount'=>$earn_rewardpoint,
 						           		 'balance'=>$_customer->getMwRewardPoint(), 
@@ -111,10 +111,10 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 	            						 'point_remaining'=>$point_remaining,
 	            						 'history_order_id'=>$order->getId(),
 						           		 'status'=>MW_RewardPoints_Model_Status::PENDING);
-	           		
+
 			        $_customer->saveTransactionHistory($historyData);
 	            }
-				
+
                 //Reward points to friend if this is first purchase
 	            $orders = Mage::getModel("sales/order")->getCollection()
 	            			->addFieldToFilter('customer_id',$customer->getId());
@@ -124,13 +124,13 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
                 $type_of_transaction = MW_RewardPoints_Model_Type::FRIEND_FIRST_PURCHASE;
                 $results = Mage::getModel('rewardpoints/activerules')->getResultActiveRulesExpiredPoints($type_of_transaction,$customer_group_id,$store_id);
                 $point = explode('/',$results[0]);
-	            if((sizeof($orders) ==1) && ($friend) && Mage::helper('rewardpoints')->checkCustomerMaxBalance($friend->getCustomerId(),$store_id,$point)){
+	            if((count($orders) ==1) && ($friend) && Mage::helper('rewardpoints')->checkCustomerMaxBalance($friend->getCustomerId(),$store_id,$point)){
 
 				 	$expired_day = $results[1];
 					$expired_time = $results[2];
 				 	$point_remaining = $results[3];
 	            	$_point = $point[0]; 
-	            	if(sizeof($point)==2)
+	            	if(count($point)==2)
 	            	{
 	            		$total = $order->getBaseGrandTotal();
 	            		$_point = ((int)($total / $point[1])) * $point[0];
@@ -161,7 +161,7 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 					$expired_time = $results[2];
 				 	$point_remaining = $results[3];
 	            	$_point = $point[0]; 
-	            	if(sizeof($point)==2)
+	            	if(count($point)==2)
 	            	{
 	            		$total = $order->getBaseGrandTotal();
 	            		$_point = ((int)($total / $point[1])) * $point[0];
@@ -184,24 +184,24 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 			else{			
 	            $friend_id = Mage::getModel('core/cookie')->get('friend');
 				$friend = Mage::getModel('rewardpoints/customer')->load($friend_id);
-				
+
 	            if($friend){	            	
 	            	$type_of_transaction = MW_RewardPoints_Model_Type::FRIEND_FIRST_PURCHASE;	            	
-				
+
 	            	$results = Mage::getModel('rewardpoints/activerules')->getResultActiveRulesExpiredPoints($type_of_transaction,0,$store_id);
 					$point = explode('/',$results[0]);
 				 	$expired_day = $results[1];
 					$expired_time = $results[2];
 				 	$point_remaining = $results[3];
 	            	$_point = $point[0]; 
-	            	if(sizeof($point)==2)
+	            	if(count($point)==2)
 	            	{
 	            		$total = $order->getBaseGrandTotal();
 	            		$_point = ((int)($total / $point[1])) * $point[0];
 	            	}
-					
+
 	            	if($_point){
-					
+
 		           		$historyData = array('type_of_transaction'=>MW_RewardPoints_Model_Type::FRIEND_FIRST_PURCHASE,
 							           		 'amount'=>(int)$_point, 
 							           		 'balance'=>$friend->getMwRewardPoint()+(int)$_point, 
@@ -314,7 +314,7 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 											    ->addFieldToFilter('type_of_transaction',MW_RewardPoints_Model_Type::ORDER_CANCELLED_ADD_POINTS)
 												->addFieldToFilter('transaction_detail',$order->getIncrementId());
 						
-					if(sizeof($transactions_refund) >0) continue;
+					if(count($transactions_refund) >0) continue;
 					
 					$customer->addRewardPoint($new_transaction->getAmount());
 					
@@ -383,7 +383,7 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 											    ->addFieldToFilter('type_of_transaction',MW_RewardPoints_Model_Type::ORDER_CANCELLED_ADD_POINTS)
 												->addFieldToFilter('transaction_detail',$order->getIncrementId());
 						
-					if(sizeof($transactions_refund) >0) continue;
+					if(count($transactions_refund) >0) continue;
 					
 					$customer->addRewardPoint($transaction->getAmount());
 					
@@ -641,7 +641,7 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 			->addFieldToFilter('transaction_detail',array('like'=>"%".$order->getIncrementId()."%"))
 			->addFieldToFilter('status',array('in'=>array(MW_RewardPoints_Model_Status::COMPLETE)));
 
-			if(sizeof($transactions)) foreach($transactions as $transaction)
+			if(count($transactions)) foreach($transactions as $transaction)
 			{
 				$customer = $transaction->getCustomer();
 				$store_id = Mage::getModel('customer/customer')->load($customer->getId())->getStoreId();
@@ -689,7 +689,7 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 											    ->addFieldToFilter('type_of_transaction',MW_RewardPoints_Model_Type::REFUND_ORDER_ADD_POINTS)
 												->addFieldToFilter('transaction_detail',$order->getIncrementId());
 						
-						if(sizeof($transactions_refund) >0) continue;
+						if(count($transactions_refund) >0) continue;
 						
 						if($restore_spent_points){
 							$customer->addRewardPoint($transaction->getAmount());
@@ -724,7 +724,7 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 											    ->addFieldToFilter('type_of_transaction',MW_RewardPoints_Model_Type::REFUND_ORDER_SUBTRACT_POINTS)
 												->addFieldToFilter('transaction_detail',$order->getIncrementId());
 						
-						if(sizeof($transactions_refund) >0) continue;
+						if(count($transactions_refund) >0) continue;
 
 						if($transaction->getStatus() == MW_RewardPoints_Model_Status::COMPLETE && $subtract_reward_point){
 							$customer->addRewardPoint(-$transaction->getAmount());
@@ -753,7 +753,7 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 											    ->addFieldToFilter('type_of_transaction',MW_RewardPoints_Model_Type::REFUND_ORDER_SUBTRACT_POINTS)
 												->addFieldToFilter('transaction_detail',$order->getIncrementId());
 						
-						if(sizeof($transactions_refund) >0) continue;
+						if(count($transactions_refund) >0) continue;
 
 						if($transaction->getStatus() == MW_RewardPoints_Model_Status::COMPLETE && $subtract_reward_point){
 							$customer->addRewardPoint(-$transaction->getAmount());
@@ -802,7 +802,7 @@ class MW_RewardPoints_Model_Checkout extends Mage_Core_Model_Abstract
 											    ->addFieldToFilter('type_of_transaction',MW_RewardPoints_Model_Type::REFUND_ORDER_FREND_PURCHASE)
 												->addFieldToFilter('transaction_detail',$transaction->getTransactionDetail());
 						
-					if(sizeof($transactions_refund) >0) continue;
+					if(count($transactions_refund) >0) continue;
 						
 						
 					if($subtract_reward_point){

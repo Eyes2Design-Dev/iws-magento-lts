@@ -63,14 +63,14 @@ class MW_RewardPoints_Model_Quote extends Mage_Core_Model_Abstract
 				foreach ($quote->getAllItems() as $item) {
 						$qty = $item->getQty();
 						$mw_reward_point = Mage::getModel('catalog/product')->load($item->getProductId())->getData('mw_reward_point_sell_product');
-						if($mw_reward_point > 0)$product_sell_point = $product_sell_point + $qty * $mw_reward_point;
+						if($mw_reward_point > 0)$product_sell_point += $qty * $mw_reward_point;
 					if($product_sell_point > 0 && $customer_rewarpoint < $product_sell_point + $quote->getMwRewardpoint()){
 						//$quote->removeItem($item->getId())->save();
 						$quote->setMwRewardpointDiscount(0)->setMwRewardpoint(0)->save();
 						Mage::getSingleton('checkout/session')->getMessages(true);
 						Mage::getSingleton('checkout/session')->setAllowCheckout(false);
 						Mage::getSingleton('checkout/session')->addError(Mage::helper('rewardpoints')->__('You do not have enough points for product in cart!'));
-						
+
 						//Mage::helper('checkout')->isAllowedGuestCheckout($quote);
 						//$url = $this->getUrl('checkout/cart');
 						//return Mage::app()->getFrontController()->getResponse()->setRedirect($url);

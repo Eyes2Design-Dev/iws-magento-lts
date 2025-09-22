@@ -458,7 +458,7 @@ class TM_ProLabels_Model_Mysql4_Label extends Mage_CatalogRule_Model_Mysql4_Rule
                 foreach (current($simpleProductIds) as $productId) {
                     $simpleProduct = Mage::getModel('catalog/product') -> load($productId);
                     $productQty = $simpleProduct -> getData('stock_item') -> qty;
-                    $quantity = $quantity + (int)$productQty;
+                    $quantity += (int)$productQty;
                 }
             } elseif ($product -> getTypeInstance() instanceof Mage_Bundle_Model_Product_Type) {
                 $groupSum = array();

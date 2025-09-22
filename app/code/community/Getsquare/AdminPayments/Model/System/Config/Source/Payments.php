@@ -14,7 +14,7 @@ class Getsquare_AdminPayments_Model_System_Config_Source_Payments
     public function toOptionArray()
     {
         $methods = Mage::helper('payment')->getPaymentMethods();
-        foreach ($methods as $methodCode => $methodData) {
+        foreach ($methods as $methodData) {
             $methodInstance = Mage::getModel($methodData['model']);
             if(!$methodInstance) {
                 continue;

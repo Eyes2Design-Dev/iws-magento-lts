@@ -114,7 +114,7 @@ class MW_RewardPoints_Adminhtml_RewardpointsController extends Mage_Adminhtml_Co
 						if($line >1){
 							$content = str_replace('"','',$tmp);
 							$customerInfo = explode(',',$content);
-							if(sizeof($customerInfo) >= 3 && sizeof($customerInfo) <= 4)
+							if(count($customerInfo) >= 3 && count($customerInfo) <= 4)
 							{
 								$customer = Mage::getModel('customer/customer')->setWebsiteId($website_id)->loadByEmail($customerInfo[1]);
 								if($customer->getId())
@@ -128,7 +128,7 @@ class MW_RewardPoints_Adminhtml_RewardpointsController extends Mage_Adminhtml_Co
 								  	$detail = 'Imported by Administrator';
 									$detail_config = Mage::helper('rewardpoints/data')->getDefaultCommentConfig($store_id);
 								  	if($detail_config != '') $detail = $detail_config;
-								  	if(sizeof($customerInfo) == 4){
+								  	if(count($customerInfo) == 4){
 								  		$customerInfo[3] = trim($customerInfo[3],"\n");
 								  		if(isset($customerInfo[3]) && $customerInfo[3] != '') $detail = $customerInfo[3];
 								  	}
@@ -137,16 +137,16 @@ class MW_RewardPoints_Adminhtml_RewardpointsController extends Mage_Adminhtml_Co
 								  	{
 								  		$oldPoints = $_customer->getMwRewardPoint();
 								  		$newPoints = $oldPoints + $customerInfo[2];
-			    	 
+
 										if($newPoints < 0) $newPoints = 0;
 								    	$amount = abs($newPoints - $oldPoints);
-								    	
+
 								  		if($amount > 0){
 								  			$results = Mage::helper('rewardpoints/data')->getTransactionExpiredPoints($amount,$store_id);
 						    				$expired_day = $results[0];
 											$expired_time = $results[1] ;
 											$point_remaining = $results[2];
-						
+
 											$_customer->setData('mw_reward_point',$newPoints);
 									    	$_customer->save();
 									    	$balance = $_customer->getMwRewardPoint();
@@ -160,7 +160,7 @@ class MW_RewardPoints_Adminhtml_RewardpointsController extends Mage_Adminhtml_Co
 							            						 'point_remaining'=>$point_remaining,
 														    	 'status'=>MW_RewardPoints_Model_Status::COMPLETE);
 									    	$_customer->saveTransactionHistory($historyData);
-									    	
+
 									    	// process expired points when spent point
 				    						if($customerInfo[2] < 0) Mage::helper('rewardpoints/data')->processExpiredPointsWhenSpentPoints($_customer->getId(),$amount);
 									    	// send mail when points changed
@@ -181,7 +181,7 @@ class MW_RewardPoints_Adminhtml_RewardpointsController extends Mage_Adminhtml_Co
 						$line  ++;
 					}
 					
-					if(sizeof($errors))
+					if(count($errors))
 					{
 						$err =Mage::helper('rewardpoints')->__("Some errors occur while importing points")."<br>";
 						foreach($errors as $error)

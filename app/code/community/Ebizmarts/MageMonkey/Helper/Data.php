@@ -1052,7 +1052,7 @@ class Ebizmarts_MageMonkey_Helper_Data extends Mage_Core_Helper_Abstract
 					$customerLists = $api->listMemberInfo($listId,$email);
 					$customerLists = isset($customerLists['data'][0]['merges']['GROUPINGS']) ?$customerLists['data'][0]['merges']['GROUPINGS'] :array();
 
-					foreach ($customerLists as $clkey => $cl)
+					foreach ($customerLists as $cl)
 					{
 						if (!isset($groupings[$cl['id']]))
 						{

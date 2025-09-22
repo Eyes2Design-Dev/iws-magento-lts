@@ -128,9 +128,9 @@ class Amasty_Customerattr_Block_Data_Form_Element_Selectimg extends Varien_Data_
         $html .= ' />&nbsp;';
         $html .= $this->_escape($option['label']);
         $html .= '</div></div>';
-        
+
         return $html;
-        
+
         /*
         $html = '<option value="'.$this->_escape($option['value']).'"';
         $html.= isset($option['title']) ? 'title="'.$this->_escape($option['title']).'"' : '';

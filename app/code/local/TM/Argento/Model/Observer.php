@@ -42,8 +42,8 @@ class TM_Argento_Model_Observer
         $websiteCode = $request->getParam('website');
 
         $inherited   = true;
-        foreach ($request->getParam('groups') as $groupName => $groupValue) {
-            foreach ($groupValue['fields'] as $fieldName => $fieldValue) {
+        foreach ($request->getParam('groups') as $groupValue) {
+            foreach ($groupValue['fields'] as $fieldValue) {
                 if (empty($fieldValue['inherit'])) {
                     $inherited = false;
                     break 2;

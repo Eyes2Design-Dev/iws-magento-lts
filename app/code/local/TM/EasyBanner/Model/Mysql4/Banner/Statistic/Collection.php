@@ -28,7 +28,7 @@ class TM_EasyBanner_Model_Mysql4_Banner_Statistic_Collection extends Mage_Core_M
             ->addFieldToFilter('date', $this->getDateRange($range, $customStart, $customEnd))
             ->getSelect()
             ->group('range');
-        
+
         return $this;
     }
 

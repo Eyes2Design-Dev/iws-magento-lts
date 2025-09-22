@@ -59,10 +59,10 @@ class MW_RewardPoints_CheckoutController extends Mage_Core_Controller_Front_Acti
 			$this->norouteAction();
 			return;
 		}
-		
+
     	$rewardpoints = $this->getRequest()->getParam('rewardpoints');
     	if($rewardpoints <0) $rewardpoints = - $rewardpoints;
-    	
+
     	$rewardpoints = round(($rewardpoints/$step),0) * $step;
     	if($rewardpoints >= 0)
     	{

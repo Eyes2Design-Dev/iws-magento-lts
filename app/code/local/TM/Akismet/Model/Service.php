@@ -1,5 +1,5 @@
 <?php
-class TM_Akismet_Model_Service 
+class TM_Akismet_Model_Service
 {
     /**
      *
@@ -61,7 +61,7 @@ class TM_Akismet_Model_Service
             );
             return false;
         }
-        
+
         $helper = Mage::helper('core/http');
         $data = array(
             'user_ip'              => $helper->getRemoteAddr(),

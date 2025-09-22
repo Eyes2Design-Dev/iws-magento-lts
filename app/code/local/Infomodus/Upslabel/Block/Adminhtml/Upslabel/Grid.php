@@ -59,7 +59,7 @@ class Infomodus_Upslabel_Block_Adminhtml_Upslabel_Grid extends Mage_Adminhtml_Bl
               2 => 'Disabled',
           ),
       ));
-	  
+
         $this->addColumn('action',
             array(
                 'header'    =>  Mage::helper('upslabel')->__('Action'),
@@ -78,10 +78,10 @@ class Infomodus_Upslabel_Block_Adminhtml_Upslabel_Grid extends Mage_Adminhtml_Bl
                 'index'     => 'stores',
                 'is_system' => true,
         ));
-		
+
 		$this->addExportType('*/*/exportCsv', Mage::helper('upslabel')->__('CSV'));
 		$this->addExportType('*/*/exportXml', Mage::helper('upslabel')->__('XML'));
-	  
+
       return parent::_prepareColumns();
   }
 

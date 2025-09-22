@@ -16,7 +16,7 @@
  * @author tblanchard
  * Copyright (c) 2008, Avalara.  All rights reserved.
 */
-class JurisdictionType 
+class JurisdictionType
 {
 	/**
 	 *  Unspecified Jurisdiction
@@ -24,28 +24,28 @@ class JurisdictionType
 	 * @var JurisdictionType
 	 */
 	public static $Composite	= 'Composite';
-	
+
 	/**
 	 * State
 	 *
 	 * @var JurisdictionType
 	 */
     public static $State	= 'State';
-    
+
     /**
 	 * County
 	 *
 	 * @var JurisdictionType
 	 */
     public static $County	= 'County';
-    
+
     /**
 	 * City
 	 *
 	 * @var JurisdictionType
 	 */
     public static $City		= 'City';
-    
+
     /**
 	 * Special Tax Jurisdiction
 	 *
@@ -53,7 +53,7 @@ class JurisdictionType
 	 */
     public static $Special	= 'Special';
 /*
-    
+
 	public static function Values()
 	{
 		return array(
@@ -64,10 +64,10 @@ class JurisdictionType
 			JurisdictionType::$Special
 		);
 	}
-	
+
     // Unfortunate boiler plate due to polymorphism issues on static functions
     public static function Validate($value) { self::__Validate($value,self::Values(),__CLASS__); }
-	
+
 	*/
 	
 }

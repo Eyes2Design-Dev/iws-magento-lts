@@ -15,20 +15,20 @@
  
  
   
-class AdjustTaxRequest 
+class AdjustTaxRequest
 {
 	private $AdjustmentReason;			//int
 	private $AdjustmentDescription;		//string
 	private $GetTaxRequest;				//string
 
-		
+
     /**     
      * Adjustment Description is required when AdjustmentReason is "Other" for enhanced tracability. 
      *
      * @param string $value
      */
 	public function setAdjustmentDescription($value) { $this->AdjustmentDescription = $value; }
-  
+
 
 
 	/**
@@ -52,19 +52,19 @@ class AdjustTaxRequest
 	 * @param int $value	 
 	 */		
     public function setAdjustmentReason($value) { $this->AdjustmentReason = $value;}
-    
-    
+
+
 	/**
 	 * Holds the data for Adjust Tax call. It takes the information needed for GetTax call. 
 	 *
 	 * @param GetTaxRequest $value
 	 */
     public function setGetTaxRequest($value) { $this->GetTaxRequest = $value;}
-	 
+
  	public function getAdjustmentReason() { return $this->AdjustmentReason;}	//int
 
     public function getAdjustmentDescription() { return $this->AdjustmentDescription;}	
-        
+
 
     public function getGetTaxRequest() { return $this->GetTaxRequest;}	//string   invoice number
  

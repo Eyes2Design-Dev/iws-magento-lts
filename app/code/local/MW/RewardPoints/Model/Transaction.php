@@ -63,7 +63,7 @@ class MW_RewardPoints_Model_Transaction extends Varien_Object
 					->addFieldToFilter('status',MW_RewardPoints_Model_Status::PENDING)
 		;
 
-		if(sizeof($_transactions)) foreach($_transactions as $_transaction)
+		if(count($_transactions)) foreach($_transactions as $_transaction)
 		{
 			$friend_id = Mage::getModel('core/cookie')->get('friend');
 			Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer->getId(), $friend_id);
@@ -154,7 +154,7 @@ class MW_RewardPoints_Model_Transaction extends Varien_Object
 					->addFieldToFilter('status',MW_RewardPoints_Model_Status::PENDING)
 		;
 
-		if(sizeof($_transactions)) foreach($_transactions as $_transaction)
+		if(count($_transactions)) foreach($_transactions as $_transaction)
 		{
 			$friend_id = Mage::getModel('core/cookie')->get('friend');
 			Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer->getId(), $friend_id);

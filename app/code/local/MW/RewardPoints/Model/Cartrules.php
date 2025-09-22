@@ -29,7 +29,7 @@ class MW_RewardPoints_Model_Cartrules extends Mage_Core_Model_Abstract
     	parent::_construct();
         $this->_init('rewardpoints/cartrules');
         $this->setIdFieldName('rule_id');
-        
+
     }
 
     public function getConditionsInstance()
@@ -150,7 +150,7 @@ class MW_RewardPoints_Model_Cartrules extends Mage_Core_Model_Abstract
                 foreach ($value as $id=>$data) {
                     $path = explode('--', $id);
                     $node =& $arr;
-                    for ($i=0, $l=sizeof($path); $i<$l; $i++) {
+                    for ($i=0, $l=count($path); $i<$l; $i++) {
                         if (!isset($node[$key][$path[$i]])) {
                             $node[$key][$path[$i]] = array();
                         }
@@ -327,7 +327,7 @@ class MW_RewardPoints_Model_Cartrules extends Mage_Core_Model_Abstract
         $this->_isReadonly = (boolean) $value;
         return $this;
     }
-    
+
     /**
      * Validates data for rule
      * @param Varien_Object $object

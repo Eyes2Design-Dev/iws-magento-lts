@@ -59,7 +59,7 @@ class MW_RewardPoints_Helper_Data extends Mage_Core_Helper_Abstract
 				break;
 			} else if($point_remaining < $points){
 				$transaction_collection ->setPointRemaining(0)->save();
-				$points = $points - $point_remaining;
+				$points -= $point_remaining;
 			} 
 			
 		}
@@ -316,7 +316,7 @@ class MW_RewardPoints_Helper_Data extends Mage_Core_Helper_Abstract
 			if($customer_id && $enable){
 				$collection_customers = Mage::getModel('rewardpoints/customer')->getCollection()
 												->addFieldToFilter('customer_id', $customer_id);
-				if(sizeof($collection_customers) > 0){
+				if(count($collection_customers) > 0){
 					foreach ($collection_customers as $collection_customer) {
 						if($collection_customer->getMwRewardPoint() > 0)
 							return '<span style="color:yellow"> (<a href="'.Mage::getUrl("rewardpoints/rewardpoints").'" style="color:yellow">'.$this->formatPoints($collection_customer->getMwRewardPoint(),$store_id).'</a>)</span>';
@@ -340,7 +340,7 @@ class MW_RewardPoints_Helper_Data extends Mage_Core_Helper_Abstract
 			if($customer_id){
 				$collection_customers = Mage::getModel('rewardpoints/customer')->getCollection()
 												->addFieldToFilter('customer_id', $customer_id);
-				if(sizeof($collection_customers) > 0){
+				if(count($collection_customers) > 0){
 					foreach ($collection_customers as $collection_customer) {
 						if($collection_customer->getMwRewardPoint() > 0)
 							return ' ('.$this->formatPoints($collection_customer->getMwRewardPoint(),$store_id).')';
@@ -387,7 +387,7 @@ class MW_RewardPoints_Helper_Data extends Mage_Core_Helper_Abstract
 		if($customer_id){
 			$collection_customer = Mage::getModel('rewardpoints/customer')->getCollection()
 											->addFieldToFilter('customer_id', $customer_id);
-			if(sizeof($collection_customer) == 0){
+			if(count($collection_customer) == 0){
 				$_customer_table = Mage::getModel('rewardpoints/customer')->getCollection();
 				$write = Mage::getSingleton('core/resource')->getConnection('core_write');
 		        $sql = 'INSERT INTO '.$_customer_table->getTable('customer').'(customer_id,mw_reward_point,mw_friend_id) VALUES('.$customer_id.',0,'. (($friend_id)?$friend_id:0).')';
@@ -403,7 +403,7 @@ class MW_RewardPoints_Helper_Data extends Mage_Core_Helper_Abstract
 										
 		if($transaction_detail != NULL) $collection_customer ->addFieldToFilter('transaction_detail', $transaction_detail);
 		if($status != NULL) $collection_customer ->addFieldToFilter('status', $status);
-		return (int)sizeof($collection_customer);
+		return (int)count($collection_customer);
 		
 	}
 	public function checkCustomerMaxBalance($customer_id,$store_id,$pointAdd = 0)

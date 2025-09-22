@@ -54,7 +54,7 @@ class Infomodus_Upslabel_Adminhtml_UpslabelController extends Mage_Adminhtml_Con
             $arrPackagesOld = $this->getRequest()->getParam('package');
             foreach ($arrPackagesOld AS $k => $v) {
                 $i = 0;
-                foreach ($v AS $d => $f) {
+                foreach ($v AS $f) {
                     $arrPackages[$i][$k] = $f;
                     $i += 1;
                 }

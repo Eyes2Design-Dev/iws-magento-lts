@@ -121,7 +121,7 @@ class TM_EasyBanner_Block_Adminhtml_Banner_Edit_Tab_Statistics_Graph
 
         // process each string in the array, and find the max length
         foreach ($this->getAllSeries() as $index => $serie) {
-            $localmaxlength[$index] = sizeof($serie);
+            $localmaxlength[$index] = count($serie);
             $localmaxvalue[$index] = max($serie);
             $localminvalue[$index] = min($serie);
         }
@@ -161,11 +161,11 @@ class TM_EasyBanner_Block_Adminhtml_Banner_Edit_Tab_Statistics_Graph
 
         $chartdata = array();
 
-        foreach ($this->getAllSeries() as $index => $serie) {
+        foreach ($this->getAllSeries() as $serie) {
             $thisdataarray = $serie;
             if ($this->_encoding == "s") {
                 // SIMPLE ENCODING
-                for ($j = 0; $j < sizeof($thisdataarray); $j++) {
+                for ($j = 0; $j < count($thisdataarray); $j++) {
                     $currentvalue = $thisdataarray[$j];
                     if (is_numeric($currentvalue)) {
                         $ylocation = round((strlen($this->_simpleEncoding)-1) * ($yorigin + $currentvalue) / $yrange);
@@ -177,7 +177,7 @@ class TM_EasyBanner_Block_Adminhtml_Banner_Edit_Tab_Statistics_Graph
                 // END SIMPLE ENCODING
             } else {
                 // EXTENDED ENCODING
-                for ($j = 0; $j < sizeof($thisdataarray); $j++) {
+                for ($j = 0; $j < count($thisdataarray); $j++) {
                     $currentvalue = $thisdataarray[$j];
                     if (is_numeric($currentvalue)) {
                         if ($yrange) {
@@ -209,7 +209,7 @@ class TM_EasyBanner_Block_Adminhtml_Banner_Edit_Tab_Statistics_Graph
         $valueBuffer = array();
         $rangeBuffer = "";
 
-        if (sizeof($this->_axisLabels) > 0) {
+        if (count($this->_axisLabels) > 0) {
             $params['chxt'] = implode(',', array_keys($this->_axisLabels));
             $indexid = 0;
             foreach ($this->_axisLabels as $idx=>$labels){
@@ -244,15 +244,15 @@ class TM_EasyBanner_Block_Adminhtml_Banner_Edit_Tab_Statistics_Graph
                     $tmpstring = implode('|', $this->_axisLabels[$idx]);
 
                     $valueBuffer[] = $indexid . ":|" . $tmpstring;
-                    if (sizeof($this->_axisLabels[$idx]) > 1) {
-                        $deltaX = 100/(sizeof($this->_axisLabels[$idx])-1);
+                    if (count($this->_axisLabels[$idx]) > 1) {
+                        $deltaX = 100/(count($this->_axisLabels[$idx])-1);
                     } else {
                         $deltaX = 100;
                     }
                 } else if ($idx == 'y') {
                     $valueBuffer[] = $indexid . ":|" . implode('|', $yLabels);
-                    if (sizeof($yLabels)-1) {
-                        $deltaY = 100/(sizeof($yLabels)-1);
+                    if (count($yLabels)-1) {
+                        $deltaY = 100/(count($yLabels)-1);
                     } else {
                         $deltaY = 100;
                     }

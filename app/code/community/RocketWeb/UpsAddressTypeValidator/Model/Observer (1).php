@@ -36,7 +36,7 @@ class RocketWeb_UpsAddressTypeValidator_Model_Observer{
 
         if($indicator && !empty($indicator) && $order->getShippingAddress() && $order->getShippingAddress()->getCountryId() == 'US') {
             $indicatorText = $indicator == RocketWeb_UpsAddressTypeValidator_Model_Usa_Shipping_Carrier_Ups::ADDRESS_TYPE_RESIDENTIAL ? $config->getResidentialIndicator() : $config->getCommercialIndicator();
-            $shippingDescription = $shippingDescription . $indicatorText;
+            $shippingDescription .= $indicatorText;
         } else {
             if($config->enableIndicator() && $config->enableIndicatorForOthers() && $order->getShippingAddress()) {
                 $upsindicator = RocketWeb_UpsAddressTypeValidator_Helper_Data::getAddressTypeFromAddress($order->getShippingAddress());

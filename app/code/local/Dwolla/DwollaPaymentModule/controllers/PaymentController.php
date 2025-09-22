@@ -49,7 +49,7 @@ class Dwolla_DwollaPaymentModule_PaymentController extends Mage_Core_Controller_
 		// If no orders were found, wait 5 seconds, then try again
 		// This might happen when users pay from their Dwolla balance
 		// and the Webhook hits before the redirect registers
-		if(!$orders || sizeof($orders) < 1) {
+		if(!$orders || count($orders) < 1) {
 			sleep(5);
 			$orders = Mage::getModel('sales/order')->getCollection()->addFieldToFilter('dwolla_transaction_id', $id);
 		}

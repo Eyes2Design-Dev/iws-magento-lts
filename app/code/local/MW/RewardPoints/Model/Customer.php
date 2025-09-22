@@ -134,13 +134,13 @@ class MW_RewardPoints_Model_Customer extends Mage_Core_Model_Abstract
 							    		 'point_remaining'=>$point_remaining,
 							             'status'=>MW_RewardPoints_Model_Status::COMPLETE);
 		            $friend->saveTransactionHistory($historyData);
-		            
+
 		            // send mail when points changed
 		            $store_id = Mage::getModel('customer/customer')->load($friend->getId())->getStoreId();
 					Mage::helper('rewardpoints')->sendEmailCustomerPointChanged($friend->getId(),$historyData, $store_id);
 	            }
             }
-			
+
 			//init reward points of customer
             //$point = Mage::getStoreConfig('rewardpoints/config/reward_point_for_registering');
             $type_of_transaction = MW_RewardPoints_Model_Type::REGISTERING;
@@ -152,7 +152,7 @@ class MW_RewardPoints_Model_Customer extends Mage_Core_Model_Abstract
 		 	$point_remaining = $results[3];
             Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer_id, $friend_id);	
             $size_history = Mage::helper('rewardpoints/data')->sizeofTransactionHistory($customer_id,$type_of_transaction);
-            
+
             // add point when customer Subcriber
             $this->updatePointSubcriber($customer_id);
 			//Save history transaction 
@@ -170,11 +170,11 @@ class MW_RewardPoints_Model_Customer extends Mage_Core_Model_Abstract
 						    		 'point_remaining'=>$point_remaining,
 									 'status'=>MW_RewardPoints_Model_Status::COMPLETE);
 				$_customerModel->saveTransactionHistory($historyData);
-				
+
 				// send mail when points changed
 	            $store_id = Mage::getModel('customer/customer')->load($customer_id)->getStoreId();
 				Mage::helper('rewardpoints')->sendEmailCustomerPointChanged($customer_id,$historyData, $store_id);
-					
+
 				Mage::getSingleton('customer/session')->addSuccess(Mage::helper('rewardpoints')->__('You recived %s %s points for signing up.',$point, Mage::helper('rewardpoints')->getPointCurency($store_id)));
 			}
 			//Mage::dispatchEvent('customer_account_registed_rewardpoint');

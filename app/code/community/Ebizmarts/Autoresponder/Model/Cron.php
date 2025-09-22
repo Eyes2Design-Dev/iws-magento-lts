@@ -276,7 +276,7 @@ class Ebizmarts_Autoresponder_Model_Cron
         foreach($collection as $order) {
             $counter = 0;
             $allRelated = array();
-            foreach($order->getAllItems() as $itemId => $item) {
+            foreach($order->getAllItems() as $item) {
                 if($maxRelated && $maxRelated < $counter) {
                     break;
                 }

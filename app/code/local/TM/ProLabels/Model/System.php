@@ -23,7 +23,7 @@ class TM_ProLabels_Model_System extends Mage_Catalog_Model_Abstract
             $this->_getResource()->loadLabelProductOutImage($this);
             $this->_getResource()->loadLabelCategoryOutImage($this);
         }
-    
+
         /* parent::_beforeSave(); */
     }
     

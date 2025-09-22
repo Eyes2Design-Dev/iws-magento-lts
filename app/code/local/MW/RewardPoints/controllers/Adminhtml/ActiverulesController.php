@@ -79,7 +79,7 @@ class MW_RewardPoints_Adminhtml_ActiverulesController extends Mage_Adminhtml_Con
 			    						     ->addFieldToFilter('coupon_code', $data['coupon_code']);
 						
 					}
-					if(sizeof($active_points) > 0)
+					if(count($active_points) > 0)
 					{
 						Mage::getSingleton('adminhtml/session')->addError(Mage::helper('rewardpoints')->__('The coupon code invalid'));
 		                Mage::getSingleton('adminhtml/session')->setFormData($data);

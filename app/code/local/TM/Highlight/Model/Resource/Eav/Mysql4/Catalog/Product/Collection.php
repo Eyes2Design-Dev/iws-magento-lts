@@ -80,7 +80,7 @@ class TM_Highlight_Model_Resource_Eav_Mysql4_Catalog_Product_Collection
                 ->quoteInto('cat_index.is_parent=?', $filters['category_is_anchor']);
         }*/
 
-        $joinCond = join(' AND ', $conditions);
+        $joinCond = implode(' AND ', $conditions);
         $fromPart = $this->getSelect()->getPart(Zend_Db_Select::FROM);
         if (isset($fromPart['cat_index'])) {
             $fromPart['cat_index']['joinCondition'] = $joinCond;

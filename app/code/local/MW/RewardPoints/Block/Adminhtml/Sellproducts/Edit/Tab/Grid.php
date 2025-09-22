@@ -50,7 +50,7 @@ class MW_Rewardpoints_Block_Adminhtml_Sellproducts_Edit_Tab_Grid extends Mage_Ad
             $collection->joinAttribute('status', 'catalog_product/status', 'entity_id', null, 'inner');
             $collection->joinAttribute('visibility', 'catalog_product/visibility', 'entity_id', null, 'inner');
         }
-		
+
        // $collection ->addAttributeToFilter('type_id','simple');
         $this->setCollection($collection);
 
@@ -144,7 +144,7 @@ class MW_Rewardpoints_Block_Adminhtml_Sellproducts_Edit_Tab_Grid extends Mage_Ad
                 'type'  => 'number',
                 'index' => 'qty',
         ));
-        
+
 
         $this->addColumn('visibility',
             array(
@@ -186,7 +186,7 @@ class MW_Rewardpoints_Block_Adminhtml_Sellproducts_Edit_Tab_Grid extends Mage_Ad
                 'editable'          => true,
             	'sortable'      => false,
                 'renderer'  => 'rewardpoints/adminhtml_renderer_sellproduct',
-            
+
         ));
 
         $this->addColumn('action',
@@ -215,7 +215,7 @@ class MW_Rewardpoints_Block_Adminhtml_Sellproducts_Edit_Tab_Grid extends Mage_Ad
 
         return parent::_prepareColumns();
     }
-    
+
 	public function getGridUrl()
     {
         return $this->_getData('grid_url') ? $this->_getData('grid_url') : $this->getUrl('*/*/sellProductGrid', array('_current'=>true));

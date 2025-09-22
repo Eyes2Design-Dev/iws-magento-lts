@@ -196,7 +196,7 @@ class TM_SoldTogether_Adminhtml_OrderController extends Mage_Adminhtml_Controlle
 
             $i = 0;
             $newReindexData = array();
-            foreach ($reindexData as $reindexArr => $values){
+            foreach ($reindexData as $values){
                 $newReindexData[$i] = array();
                 $temp = $values;
                 $j = 0;

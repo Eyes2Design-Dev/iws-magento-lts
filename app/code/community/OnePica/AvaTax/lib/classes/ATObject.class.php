@@ -39,12 +39,12 @@ class ATObject
 	public function __unset($n) { unset($this->_ivars[$n]); }	
 	public function __call($n,$args)
 	{
-		if(sizeof($args) == 1)
+		if(count($args) == 1)
 		{
 			$this->__set($n,$args[0]);
 			return null;
 		}
-		else if(sizeof($args) == 0)
+		else if(count($args) == 0)
 		{
 			return $this->__get($n);
 		}

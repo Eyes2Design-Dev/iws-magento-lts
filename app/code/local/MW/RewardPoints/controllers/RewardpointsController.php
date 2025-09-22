@@ -99,7 +99,7 @@ class MW_RewardPoints_RewardpointsController extends Mage_Core_Controller_Front_
 							   ->addFieldToFilter('transaction_detail',$rule_id)
 							   ->addFieldToFilter('status',MW_RewardPoints_Model_Status::COMPLETE);
 							   
-			if(!sizeof($transactions))
+			if(!count($transactions))
 			{
 				Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer_id, 0);	
 				$_customer = Mage::getModel('rewardpoints/customer')->load($customer_id);
@@ -156,7 +156,7 @@ class MW_RewardPoints_RewardpointsController extends Mage_Core_Controller_Front_
 					->addFieldToFilter('type_of_transaction',$type_of_transaction)
 					->addFieldToFilter('transaction_detail',$url_like)
 					->addFieldToFilter('status',array('in'=>array(MW_RewardPoints_Model_Status::COMPLETE)));
-				if(sizeof($transactions) == 0)
+				if(count($transactions) == 0)
 				{	
 					Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer_id, 0);
 					$_customer = Mage::getModel("rewardpoints/customer")->load($customer_id);
@@ -201,7 +201,7 @@ class MW_RewardPoints_RewardpointsController extends Mage_Core_Controller_Front_
 					->addFieldToFilter('type_of_transaction',$type_of_transaction)
 					->addFieldToFilter('transaction_detail',$url_send)
 					->addFieldToFilter('status',array('in'=>array(MW_RewardPoints_Model_Status::COMPLETE)));
-				if(sizeof($transactions) == 0)
+				if(count($transactions) == 0)
 				{	
 					Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer_id, 0);
 					$_customer = Mage::getModel("rewardpoints/customer")->load($customer_id);
@@ -290,12 +290,12 @@ class MW_RewardPoints_RewardpointsController extends Mage_Core_Controller_Front_
 								Mage::helper('rewardpoints/data')->checkAndInsertCustomerId($customer->getId(), 0);	
 								$mwCustomer = Mage::getModel('rewardpoints/customer')->load($customer->getId());
 								$mwCustomer->addRewardPoint($point);
-								
+
 								$results = Mage::helper('rewardpoints/data')->getTransactionExpiredPoints($point,$store_id);
 			    				$expired_day = $results[0];
 								$expired_time = $results[1] ;
 								$point_remaining = $results[2];
-					
+
 								$historyData = array('type_of_transaction'=>MW_RewardPoints_Model_Type::RECIVE_FROM_FRIEND, 
 													 'amount'=>$point,
 													 'balance'=>$mwCustomer->getMwRewardPoint(), 
@@ -305,12 +305,12 @@ class MW_RewardPoints_RewardpointsController extends Mage_Core_Controller_Front_
 			    									 'expired_time'=>$expired_time,
 				            						 'point_remaining'=>$point_remaining,
 													 'status'=>MW_RewardPoints_Model_Status::COMPLETE);
-								
+
 								$mwCustomer->saveTransactionHistory($historyData);
-								
+
 								// send mail when points changed
 								Mage::helper('rewardpoints')->sendEmailCustomerPointChanged($customer->getId(),$historyData, $store_id);
-								
+
 								//Subtract reward points of current customer
 								$_customer->addRewardPoint(-$point);
 								$historyData = array('type_of_transaction'=>MW_RewardPoints_Model_Type::SEND_TO_FRIEND, 
@@ -320,13 +320,13 @@ class MW_RewardPoints_RewardpointsController extends Mage_Core_Controller_Front_
 													 'transaction_time'=>now(), 
 													 'status'=>MW_RewardPoints_Model_Status::COMPLETE);
 								$_customer->saveTransactionHistory($historyData);
-								
+
 								// process expired points when spent point
 		           				Mage::helper('rewardpoints/data')->processExpiredPointsWhenSpentPoints($_customer->getId(), $point);
-		           				
+
 								// send mail when points changed
 								Mage::helper('rewardpoints')->sendEmailCustomerPointChanged($_customer->getId(),$historyData, $store_id);
-								
+
 								$this->_getSession()->addSuccess($this->__("Your reward points were sent successfuly"));
 								$this->_redirect('rewardpoints/rewardpoints/index');
 							}else{
@@ -338,19 +338,19 @@ class MW_RewardPoints_RewardpointsController extends Mage_Core_Controller_Front_
 														 'transaction_detail'=>$this->getRequest()->getPost("email"), 
 														 'transaction_time'=>now(), 
 														 'status'=>MW_RewardPoints_Model_Status::PENDING);
-									
+
 									$_customer->saveTransactionHistory($historyData);
-									
+
 									// process expired points when spent point
 		           					Mage::helper('rewardpoints/data')->processExpiredPointsWhenSpentPoints($_customer->getId(), $point);
-									
+
 									// send mail when points changed
 									Mage::helper('rewardpoints')->sendEmailCustomerPointChanged($_customer->getId(),$historyData, $store_id);
-									
+
 									//customer dose not exist
 									$this->_getSession()->addSuccess($this->__("Your reward points were sent successfully"));
 							}
-							
+
 							if(Mage::helper('rewardpoints')->allowSendEmailNotifications($store_id))
 							{
 								//Send mail to frend
@@ -421,7 +421,7 @@ class MW_RewardPoints_RewardpointsController extends Mage_Core_Controller_Front_
 		
 		if(Mage::helper('rewardpoints')->getCreditModule()){
 			$exchangeRate = explode('/',Mage::helper('rewardpoints')->pointCreditRate($store_id));
-			if(sizeof($exchangeRate)==2)
+			if(count($exchangeRate)==2)
 			{
 				if($points < 0) $points = -$points;
 				$credit = ($points * $exchangeRate[1] * 1.0)/$exchangeRate[0];

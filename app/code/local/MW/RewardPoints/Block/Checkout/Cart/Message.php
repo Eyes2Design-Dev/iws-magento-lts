@@ -25,7 +25,7 @@ class MW_RewardPoints_Block_Checkout_Cart_Message extends Mage_Core_Block_Templa
     public function _toHtml()
     {
     	$store_id = Mage::app()->getStore()->getId();
-    	if(!(Mage::helper('rewardpoints/data')->moduleEnabled()) || !sizeof($this->getMessageRules()) || !(Mage::helper('rewardpoints/data')->getEnablePromotionMessage($store_id)))
+    	if(!(Mage::helper('rewardpoints/data')->moduleEnabled()) || !count($this->getMessageRules()) || !(Mage::helper('rewardpoints/data')->getEnablePromotionMessage($store_id)))
         	return '';
 
         $html = $this->renderView();

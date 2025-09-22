@@ -57,8 +57,8 @@ function xml_pretty_printer($xml, $html_output=FALSE)
             $new_xml_lines[] = $new_line;
         } elseif (preg_match('#<s*/s*[^>/]+>#i', $xml_line)) {
             $indent_level--;
-            if (trim($new_xml_lines[sizeof($new_xml_lines)-1]) == trim(str_replace("/", "", $xml_line))) {
-                $new_xml_lines[sizeof($new_xml_lines)-1] .= $xml_line;
+            if (trim($new_xml_lines[count($new_xml_lines)-1]) == trim(str_replace("/", "", $xml_line))) {
+                $new_xml_lines[count($new_xml_lines)-1] .= $xml_line;
             } else {
                 $new_line = str_pad('', $indent_level*4) . $xml_line;
                 $new_xml_lines[] = $new_line;
@@ -69,6 +69,6 @@ function xml_pretty_printer($xml, $html_output=FALSE)
         }
     }
     
-    $xml = join("n", $new_xml_lines);
+    $xml = implode("n", $new_xml_lines);
     return ($html_output) ? '<pre>' . htmlentities($xml) . '</pre>' : $xml;
 }

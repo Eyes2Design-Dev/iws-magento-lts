@@ -66,7 +66,7 @@ class TM_EasyBanner_Model_Mysql4_Handle_Collection extends Varien_Data_Collectio
         }
         
         if (!empty($this->_orders)) {
-            foreach ($this->_orders as $key => $direction) {
+            foreach ($this->_orders as $direction) {
                 if (self::SORT_ORDER_ASC === strtoupper($direction)) {
                     asort($this->_handles);
                 } else {

@@ -146,7 +146,7 @@ class MW_RewardPoints_Model_Catalogrules extends Mage_Core_Model_Abstract
                 foreach ($value as $id=>$data) {
                     $path = explode('--', $id);
                     $node =& $arr;
-                    for ($i=0, $l=sizeof($path); $i<$l; $i++) {
+                    for ($i=0, $l=count($path); $i<$l; $i++) {
                         if (!isset($node[$key][$path[$i]])) {
                             $node[$key][$path[$i]] = array();
                         }
@@ -497,7 +497,7 @@ class MW_RewardPoints_Model_Catalogrules extends Mage_Core_Model_Abstract
 		$reward_point_attribute = 0;
 		$rule_id = 0;
 		$product_points = Mage::getModel('rewardpoints/productpoint')->getCollection()->addFieldToFilter('product_id', $product_id);
-		if(sizeof($product_points) > 0){
+		if(count($product_points) > 0){
 			foreach ($product_points as $product_point) {
 				$rule_id = $product_point ->getRuleId();
 				$reward_point = (int)$product_point->getRewardPoint();
@@ -507,7 +507,7 @@ class MW_RewardPoints_Model_Catalogrules extends Mage_Core_Model_Abstract
 					$check_store_view = $this->checkCatalogRulesStoreView($rule_id);
 					$check_customer_group = $this->checkCatalogRulesCustomerGroup($rule_id);
 					if($check_enable && $check_time && $check_store_view && $check_customer_group){
-						$reward_point_rule = $reward_point_rule + $reward_point;
+						$reward_point_rule += $reward_point;
 					}
 				}
 			}
